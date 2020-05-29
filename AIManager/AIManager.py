@@ -1,14 +1,12 @@
 from edgetpu.classification.engine import ClassificationEngine
 from edgetpu.detection.engine import DetectionEngine
 import edgetpu
-import enum
 from threading import Thread
-import json
 import re
 
 class AIManager():
     def __init__(self):
-        self.ai_type = "detection"
+        self.ai_type = "detection" #not always true
         self.engines = {}
         self.frameBuffer = {}
         self.enabled = True
@@ -16,7 +14,7 @@ class AIManager():
         self.t.start()
         self.new_data = False
         self.dataBuffer = []
-        self.labels = self.load_labels("/home/mendel/EasyCoral/AIManager/models/field_labels.txt")
+        self.labelsArray = {}
 
     def load_labels(self,path):
         LABEL_PATTERN = re.compile(r'\s*(\d+)(.+)')
@@ -32,6 +30,7 @@ class AIManager():
     def create_engine(self,model_type):
         if model_type["path"] not in self.engines.keys():
             self.engines[model_type["path"]] = model_type["engine"](model_type["path"],'/dev/apex_0')
+            self.labelsArray[model_type["path"]] = self.load_labels(model_type["label"])
 
     def run_models(self):
         while True:
@@ -41,11 +40,12 @@ class AIManager():
                 frame, model_type = self.frameBuffer[key]
                 if(model_type["modelType"]=="detect"):
                     objs = self.engines[model_type["path"]].detect_with_image(frame)#add arguments
+                    labels = self.labelsArray[model_type["path"]]
                     self.new_data = True
                     del self.frameBuffer[key]
                     tempArray = []
                     for obj in objs:
-                        tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":self.labels[obj.label_id]})
+                        tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id]})
                     tempDict = {}
                     tempDict[key] = tempArray 
                     self.dataBuffer.append(tempDict)
@@ -61,5 +61,6 @@ class AIManager():
             return(data)
 
 class AIModels:
-    detectFace = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","size":(640,480)}
-    detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_v2_edgetpu_red.tflite","size":(600,600)}
+    detectFace = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/face_labels.txt","size":(640,480)}
+    detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_v2_edgetpu_red.tflite","label":"/home/mendel/EasyCoral/AIManager/models/field_labels.txt","size":(600,600)}
+    classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/imagenet_labels.txt","size":(640,480)}
