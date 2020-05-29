@@ -1,22 +1,24 @@
 from CameraManager.TPUCameraManager import CameraManager, GStreamerPipelines
+from AIManager.AIManager import AIManager, AIModels
+from time import sleep
 
 camMan = CameraManager()
+aiMan = AIManager()
+
 CSICam = camMan.newCam(0)
 USBCam = camMan.newCam(1)
-USB2Cam = camMan.newCam(2)
-detect = detectAI()
-AICSI = CSICam.addPipeline(GStreamerPipelines.RGB,detect.size,30,"aisink")
-AIUSB = USBCam.addPipeline(GStreamerPipelines.RGB,detect.size,30,"aisink")
-s
-H264 = CSICam.addPipeline(GStreamerPipelines.H264,(640,480),30,"h264sink")
+FRCCSI = CSICam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFRC["size"],30,"aisink")
+FaceCSI = CSICam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFace["size"],30,"ai2sink")
+
+FRCUSB = USBCam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFRC["size"],30,"aiusbsink")
+FaceUSB = USBCam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFace["size"],30,"ai2usbsink")
+
 CSICam.startPipeline()
+USBCam.startPipeline()
+
 while True:
-    if(H264):
-        server.updateFrame(H264)
-        print(bytes(H264))
-    if(AICSI):
-        detect.newFrame(AICSI,"CSI")
-    if(AIUSB):
-        detect.newFrame(AIUSB,"")
-    if(detect.resp):
-        print(detect.resp)
+    aiMan.analyze_frame(AIModels.detectFRC, FRCCSI.getImage(), "FRCCSI") if(FRCCSI) else None
+    aiMan.analyze_frame(AIModels.detectFace, FaceCSI.getImage(), "FaceCSI") if(FaceCSI) else None
+    aiMan.analyze_frame(AIModels.detectFRC, FRCUSB.getImage(), "FRCUSB") if(FRCUSB) else None
+    aiMan.analyze_frame(AIModels.detectFace, FaceUSB.getImage(), "FaceUSB") if(FaceUSB) else None
+    print(aiMan.getData()) if(aiMan) else None

@@ -4,6 +4,7 @@ import enum
 import numpy as np
 import os
 from time import sleep
+from PIL import Image
 
 class CameraManager:
     def __init__(self):
@@ -35,27 +36,14 @@ class Cam:
         self.streams = {}
         self.pipelineStarted = False
         self.device = device
-        
-        
-        
-
+    
     def on_buffer(self, data, streamName):
         self.streams[streamName].newData(data)
-        
-    def getImage(self):
-        if self.streamType is GStreamerPipelines.RGB:
-            self.newdata = False
-            nparr = np.frombuffer(self.data, dtype=np.uint8)
-            image = nparr.reshape(self.res[1], self.res[0], 3)
-            return(image)
-        else:
-            print("Can't return image of H264 stream")
-            return(None)
     
     def addPipeline(self,pipeline,res,fps,sinkName):
         self.pipeline += " " + str(pipeline).format(res[0],res[1],fps,sinkName)
         self.signals[sinkName] = {'new-sample': gstreamer.new_sample_callback(self.on_buffer,sinkName),'eos' : gstreamer.on_sink_eos}
-        self.streams[sinkName] = StreamValue()
+        self.streams[sinkName] = StreamValue(pipeline,res)
         return(self.streams[sinkName])
     
     def removePipeline(self,sinkName):
@@ -105,17 +93,30 @@ class Cam:
 
 
 class StreamValue():
-    def __init__(self):
+    def __init__(self,pipeline,res):
         self.data = None
         self.updatedData = False
         self.listeners = []
-    
+        self.pipeline = pipeline
+        self.res = res
+
     def __bytes__(self):
         self.updatedData = False
         return self.data
     
     def __bool__(self):
         return self.updatedData
+    
+    def getImage(self):
+        if self.pipeline is GStreamerPipelines.RGB:
+            self.updatedData = False
+            nparr = np.frombuffer(self.data, dtype=np.uint8)
+            image = nparr.reshape(self.res[1], self.res[0], 3)
+            image = Image.fromarray(image.astype('uint8'), 'RGB')
+            return(image)
+        else:
+            print("Can't return image of H264 stream")
+            return(None)
     
     def newData(self,data):
         self.data = data
