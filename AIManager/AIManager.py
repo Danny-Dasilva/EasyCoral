@@ -49,6 +49,17 @@ class AIManager():
                     tempDict = {}
                     tempDict[key] = tempArray 
                     self.dataBuffer.append(tempDict)
+                if(model_type["modelType"]=="classify"):
+                    objs = self.engines[model_type["path"]].classify_with_image(frame)#add arguments
+                    labels = self.labelsArray[model_type["path"]]
+                    self.new_data = True
+                    del self.frameBuffer[key]
+                    tempArray = []
+                    for obj in objs:
+                        tempArray.append({"score":obj[1],"label":labels[obj[0]]})
+                    tempDict = {}
+                    tempDict[key] = tempArray 
+                    self.dataBuffer.append(tempDict)
                 
     def __bool__(self):
         return self.new_data
