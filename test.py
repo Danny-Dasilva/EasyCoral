@@ -1,6 +1,7 @@
 from CameraManager.TPUCameraManager import CameraManager, GStreamerPipelines
 from AIManager.AIManager import AIManager, AIModels
 from edgetpu.detection.engine import DetectionEngine
+import time
 camMan = CameraManager()
 aiMan = AIManager()
 
@@ -26,12 +27,13 @@ def run_detect(frame, engine, labels):
         return(tempArray)
 
 while True:
-    #aiMan.analyze_frame(AIModels.detectFRC, FRCCSI.getImage(), "FRCCSI") if(FRCCSI) else None
+    start = time.process_time()
+    aiMan.analyze_frame(AIModels.detectFRC, FRCCSI.getImage(), "FRCCSI") if(FRCCSI) else None
     #aiMan.analyze_frame({"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/face_labels.txt","size":(640,480),"runFunc":run_detect}, FaceCSI.getImage(), "FaceCSI") if(FaceCSI) else None
     #aiMan.analyze_frame(AIModels.classifyRandom, RandomCSI.getImage(), "RandomCSI") if(RandomCSI) else None
 
     #aiMan.analyze_frame(AIModels.detectFRC, FRCUSB.getImage(), "FRCUSB") if(FRCUSB) else None
-    aiMan.analyze_frame(AIModels.detectFace, FaceUSB.getImage(), "FaceUSB") if(FaceUSB) else None
+    #aiMan.analyze_frame(AIModels.detectFace, FaceUSB.getImage(), "FaceUSB") if(FaceUSB) else None
     #aiMan.analyze_frame(AIModels.classifyRandom, RandomUSB.getImage(), "RandomUSB") if(RandomUSB) else None
 
-    print(aiMan.getData()) if(aiMan) else None
+    print(aiMan.getData(), (1000*(time.process_time() - start))) if(aiMan) else None
