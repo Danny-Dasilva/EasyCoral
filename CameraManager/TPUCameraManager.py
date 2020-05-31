@@ -36,7 +36,7 @@ class Cam:
         self.streams = {}
         self.pipelineStarted = False
         self.device = device
-    
+
     def on_buffer(self, data, streamName):
         self.streams[streamName].newData(data)
     
@@ -68,16 +68,19 @@ class Cam:
 
     def startPipeline(self):
         self.thread = threading.Thread(target=self.cameraWatchdog)
+        self.thread.daemon = True
         self.thread.start()
+        
 
     def runGStreamerPipeline(self):
         self.thread1 = threading.Thread(target=gstreamer.run_pipeline,args=(self.pipeline,self.on_buffer,self.signals))
+        self.thread1.daemon = True
         self.thread1.start()
         self.pipelineStarted = True
 
     def stopGStreamerPipeline(self):
-        self.thread1 = threading.Thread(target=gstreamer.run_pipeline,args=(self.pipeline,self.on_buffer,self.signals))
-        self.thread1.start()
+        #self.thread1 = threading.Thread(target=gstreamer.run_pipeline,args=(self.pipeline,self.on_buffer,self.signals))
+        self.thread1.join()
         self.pipelineStarted = False
 
     def stopPipeline(self):

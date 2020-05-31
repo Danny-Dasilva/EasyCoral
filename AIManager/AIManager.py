@@ -11,6 +11,7 @@ class AIManager():
         self.frameBuffer = {}
         self.enabled = True
         self.t = Thread(target=self.run_models)
+        self.t.daemon = True
         self.t.start()
         self.new_data = False
         self.dataBuffer = []
@@ -49,7 +50,7 @@ class AIManager():
                     tempDict = {}
                     tempDict[key] = tempArray 
                     self.dataBuffer.append(tempDict)
-                if(model_type["modelType"]=="classify"):
+                elif(model_type["modelType"]=="classify"):
                     objs = self.engines[model_type["path"]].classify_with_image(frame)#add arguments
                     labels = self.labelsArray[model_type["path"]]
                     self.new_data = True
