@@ -27,6 +27,11 @@ class AIManager():
         if(self.enabled):
             self.create_engine(model_type)
             self.frameBuffer[tag] = (frame, model_type)
+            # else:
+            #     if model_type["path"] not in self.engines.keys():
+            #         self.engines[model_type["path"]] = custom_engine(model_type["path"],'/dev/apex_0')
+            #         self.labelsArray[model_type["path"]] = self.load_labels(model_type["label"])
+            #     self.frameBuffer[tag] = (frame, model_type)
 
     def create_engine(self,model_type):
         if model_type["path"] not in self.engines.keys():
@@ -39,29 +44,13 @@ class AIManager():
             if keys:
                 key = keys[0]
                 frame, model_type = self.frameBuffer[key]
-                if(model_type["modelType"]=="detect"):
-                    objs = self.engines[model_type["path"]].detect_with_image(frame)#add arguments
-                    labels = self.labelsArray[model_type["path"]]
-                    self.new_data = True
-                    del self.frameBuffer[key]
-                    tempArray = []
-                    for obj in objs:
-                        tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id]})
-                    tempDict = {}
-                    tempDict[key] = tempArray 
-                    self.dataBuffer.append(tempDict)
-                elif(model_type["modelType"]=="classify"):
-                    objs = self.engines[model_type["path"]].classify_with_image(frame)#add arguments
-                    labels = self.labelsArray[model_type["path"]]
-                    self.new_data = True
-                    del self.frameBuffer[key]
-                    tempArray = []
-                    for obj in objs:
-                        tempArray.append({"score":obj[1],"label":labels[obj[0]]})
-                    tempDict = {}
-                    tempDict[key] = tempArray 
-                    self.dataBuffer.append(tempDict)
-                
+                results = model_type["runFunc"](frame, self.engines[model_type["path"]], self.labelsArray[model_type["path"]])
+                self.new_data = True
+                del self.frameBuffer[key]
+                tempDict = {}
+                tempDict[key] = results
+                self.dataBuffer.append(tempDict)
+            
     def __bool__(self):
         return self.new_data
 
@@ -73,6 +62,22 @@ class AIManager():
             return(data)
 
 class AIModels:
-    detectFace = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/face_labels.txt","size":(640,480)}
-    detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_v2_edgetpu_red.tflite","label":"/home/mendel/EasyCoral/AIManager/models/field_labels.txt","size":(600,600)}
-    classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/imagenet_labels.txt","size":(640,480)}
+    def run_classify(frame, engine, labels):
+            objs = engine.classify_with_image(frame)#add arguments
+            tempArray = []
+            for obj in objs:
+                tempArray.append({"score":obj[1],"label":labels[obj[0]]})
+            return(tempArray)
+        
+    def run_detect(frame, engine, labels):
+        objs = engine.detect_with_image(frame)#add arguments
+        tempArray = []
+        for obj in objs:
+            tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id]})
+        return(tempArray)
+    
+    detectFace = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/face_labels.txt","size":(640,480),"runFunc":run_detect}
+    detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_v2_edgetpu_red.tflite","label":"/home/mendel/EasyCoral/AIManager/models/field_labels.txt","size":(600,600),"runFunc":run_detect}
+    classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/imagenet_labels.txt","size":(640,480),"runFunc":run_classify}
+
+    

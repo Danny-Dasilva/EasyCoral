@@ -1,6 +1,6 @@
 from CameraManager.TPUCameraManager import CameraManager, GStreamerPipelines
 from AIManager.AIManager import AIManager, AIModels
-
+from edgetpu.detection.engine import DetectionEngine
 camMan = CameraManager()
 aiMan = AIManager()
 
@@ -18,13 +18,20 @@ RandomUSB = USBCam.addPipeline(GStreamerPipelines.RGB,AIModels.classifyRandom["s
 CSICam.startPipeline()
 USBCam.startPipeline()
 
-while True:
-    aiMan.analyze_frame(AIModels.detectFRC, FRCCSI.getImage(), "FRCCSI") if(FRCCSI) else None
-    aiMan.analyze_frame(AIModels.detectFace, FaceCSI.getImage(), "FaceCSI") if(FaceCSI) else None
-    aiMan.analyze_frame(AIModels.classifyRandom, RandomCSI.getImage(), "RandomCSI") if(RandomCSI) else None
+def run_detect(frame, engine, labels):
+        objs = engine.detect_with_image(frame)#add arguments
+        tempArray = []
+        for obj in objs:
+            tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id]})
+        return(tempArray)
 
-    aiMan.analyze_frame(AIModels.detectFRC, FRCUSB.getImage(), "FRCUSB") if(FRCUSB) else None
+while True:
+    #aiMan.analyze_frame(AIModels.detectFRC, FRCCSI.getImage(), "FRCCSI") if(FRCCSI) else None
+    #aiMan.analyze_frame({"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/face_labels.txt","size":(640,480),"runFunc":run_detect}, FaceCSI.getImage(), "FaceCSI") if(FaceCSI) else None
+    #aiMan.analyze_frame(AIModels.classifyRandom, RandomCSI.getImage(), "RandomCSI") if(RandomCSI) else None
+
+    #aiMan.analyze_frame(AIModels.detectFRC, FRCUSB.getImage(), "FRCUSB") if(FRCUSB) else None
     aiMan.analyze_frame(AIModels.detectFace, FaceUSB.getImage(), "FaceUSB") if(FaceUSB) else None
-    aiMan.analyze_frame(AIModels.classifyRandom, RandomUSB.getImage(), "RandomUSB") if(RandomUSB) else None
+    #aiMan.analyze_frame(AIModels.classifyRandom, RandomUSB.getImage(), "RandomUSB") if(RandomUSB) else None
 
     print(aiMan.getData()) if(aiMan) else None
