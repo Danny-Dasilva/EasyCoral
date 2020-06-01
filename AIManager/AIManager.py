@@ -4,8 +4,9 @@ import edgetpu
 from threading import Thread
 import re
 import time
-from codetiming import Timer
-t = Timer()
+#from codetiming import Timer
+#t = Timer()
+
 class AIManager():
     def __init__(self):
         self.engines = {}
