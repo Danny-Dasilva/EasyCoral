@@ -5,6 +5,7 @@ import time
 camMan = CameraManager()
 aiMan = AIManager()
 
+#test
 CSICam = camMan.newCam(0)
 USBCam = camMan.newCam(1)
 
