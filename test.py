@@ -1,40 +1,30 @@
-from CameraManager.TPUCameraManager import CameraManager, GStreamerPipelines
+from EasyCamera.EasyCamera import Camera, Pipelines
 from AIManager.AIManager import AIManager, AIModels
-from edgetpu.detection.engine import DetectionEngine
-import time
-camMan = CameraManager()
-aiMan = AIManager()
+from time import sleep
 
-#test
-CSICam = camMan.newCam(0)
-USBCam = camMan.newCam(1)
+CSI = Camera(0)
+USB = Camera(1)
+AIMan = AIManager()
 
-FRCCSI = CSICam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFRC["size"],30,"aisink")
-FaceCSI = CSICam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFace["size"],30,"ai2sink")
-RandomCSI = CSICam.addPipeline(GStreamerPipelines.RGB,AIModels.classifyRandom["size"],30,"ai3sink")
+CSI.add(pipeline_type=Pipelines.H264, size=(640,480), frame_rate=30, tag="csi_h264")
+USB.add(pipeline_type=Pipelines.H264, size=(640,480), frame_rate=30, tag="usb_h264")
 
-FRCUSB = USBCam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFRC["size"],30,"aiusbsink")
-FaceUSB = USBCam.addPipeline(GStreamerPipelines.RGB,AIModels.detectFace["size"],30,"ai2usbsink")
-RandomUSB = USBCam.addPipeline(GStreamerPipelines.RGB,AIModels.classifyRandom["size"],30,"ai3usbsink")
+CSI.add_AI(AI_class=AIMan, model_type=AIModels.detectFace, frame_rate=30, tag="csi_face")
+USB.add_AI(AI_class=AIMan, model_type=AIModels.detectFace, frame_rate=30, tag="usb_face")
 
-CSICam.startPipeline()
-USBCam.startPipeline()
-
-def run_detect(frame, engine, labels):
-        objs = engine.detect_with_image(frame)#add arguments
-        tempArray = []
-        for obj in objs:
-            tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id]})
-        return(tempArray)
+CSI.start()
+USB.start()
 
 while True:
-    start = time.process_time()
-    aiMan.analyze_frame(AIModels.detectFRC, FRCCSI.getImage(), "FRCCSI") if(FRCCSI) else None
-    #aiMan.analyze_frame({"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"/home/mendel/EasyCoral/AIManager/models/face_labels.txt","size":(640,480),"runFunc":run_detect}, FaceCSI.getImage(), "FaceCSI") if(FaceCSI) else None
-    #aiMan.analyze_frame(AIModels.classifyRandom, RandomCSI.getImage(), "RandomCSI") if(RandomCSI) else None
 
-    #aiMan.analyze_frame(AIModels.detectFRC, FRCUSB.getImage(), "FRCUSB") if(FRCUSB) else None
-    #aiMan.analyze_frame(AIModels.detectFace, FaceUSB.getImage(), "FaceUSB") if(FaceUSB) else None
-    #aiMan.analyze_frame(AIModels.classifyRandom, RandomUSB.getImage(), "RandomUSB") if(RandomUSB) else None
+    if(CSI.data("csi_face")):
+        print(CSI.get_image("csi_face"), "CSI Face Data")
+    
+    print(CSI.get_fps("csi_face"), "CSI Face")
 
-    print(aiMan.getData(), (1000*(time.process_time() - start))) if(aiMan) else None
+    if(AIMan.data("csi_face")):
+        print(AIMan.get_data("csi_face"), "CSI Face AI")
+    if(AIMan.data("usb_face")):
+        print(AIMan.get_data("usb_face"), "USB Face AI")
+    
+    sleep(0.0001)
