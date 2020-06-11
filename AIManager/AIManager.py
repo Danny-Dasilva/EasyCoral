@@ -4,8 +4,7 @@ import edgetpu
 from threading import Thread
 import re
 import time
-from codetiming import Timer
-t = Timer()
+
 class AI():
     def __init__(self, tpu):
         self.tpu = tpu
@@ -96,9 +95,7 @@ class AIModels:
             return(tempArray)
         
     def run_detect(frame, engine, labels):
-        #t.start()
         objs = engine.detect_with_input_tensor(frame)
-        #t.stop()
         tempArray = []
         for obj in objs:
             tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id]})
