@@ -1,8 +1,6 @@
 import gi
 import numpy as np
 import sys
-#np.set_printoptions(threshold=sys.maxsize)
-
 import enum
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
