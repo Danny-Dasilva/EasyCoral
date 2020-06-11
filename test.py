@@ -1,5 +1,6 @@
 from EasyCamera.EasyCamera import Camera, Pipelines
 from AIManager.AIManager import AI, AIModels
+from EasyStreaming.EasyServer import EasyServer, ServerType
 from time import sleep
 
 CSI = Camera(device=0)
@@ -16,6 +17,8 @@ USB_DETECT = TPU.add(model_type=AIModels.detectFace, camera=USB)
 
 CSI.start()
 USB.start()
+
+reef_server = EasyServer(server_type=ServerType.Reef, csi_h264=CSI_H264, usb_h264=USB_H264)
 
 while True:
     # if(CSI_H264):

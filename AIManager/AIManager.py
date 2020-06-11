@@ -4,8 +4,7 @@ import edgetpu
 from threading import Thread
 import re
 import time
-from codetiming import Timer
-t = Timer()
+
 class AI():
     def __init__(self, tpu):
         self.tpu = tpu
