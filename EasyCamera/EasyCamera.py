@@ -32,19 +32,14 @@ class Camera:
                     self.stop_pipeline()
             sleep(0.25)
 
-    def add(self, pipeline_type, size, frame_rate):
+    def add(self, size, frame_rate, pipeline_type=None):
+        if(pipeline_type == None):
+            pipeline_type = Pipelines.RGB
         self.sinks.append(len(self.sinks))
         self.pipeline += str(pipeline_type).format(size[0],size[1], frame_rate, str(self.sinks[-1]))
         data_class = PipelineData(str(self.sinks[-1]))
         self.data_classes.append(data_class)
         return data_class
-
-    def add_AI(self, AI_class, model_type, frame_rate):
-        self.sinks.append(len(self.sinks))
-        self.pipeline += str(Pipelines.RGB).format(model_type["size"][0],model_type["size"][1], frame_rate, str(self.sinks[-1]))
-        data_class = PipelineData(str(self.sinks[-1]),AI_class)
-        self.data_classes.append(data_class)
-        AI_class.add_camera_pipeline(model_type, str(self.sinks[-1]))
 
     def start(self):
         if self.device is not 0:
