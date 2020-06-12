@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+        <!-- Required meta tags always come first -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <title> Reef : Ai processing made easy</title>
+        <link rel="icon" type="image/png" href="images/logo-clear.ico" />
+
+
+
+
+        <!--Server CSS -->
+        <script type="text/javascript" src="protobuf.min.js"></script>
+        <script type="text/javascript" src="broadway/YUVCanvas.js"></script>
+        <script type="text/javascript" src="broadway/Decoder.js"></script>
+        <script type="text/javascript" src="broadway/Player.js"></script>
+        <script type="text/javascript" src="ws_client.js"></script>
+        <script src="js/jquery.js"></script>
+        <!--Core CSS -->
+        <link rel="stylesheet" href="css/orange-bulma.css">
+        <link rel="stylesheet" href="css/orange-core.css">
+        
+        <!-- Fonts
+        <link href="../fonts.googleapis.com/cssc19e.css?family=Alegreya+Sans+SC:100,400" rel="stylesheet">
+        <link href="../fonts.googleapis.com/csse379.css?family=Raleway:300,400,500" rel="stylesheet"> -->
+        
+      
+
+        <link rel="stylesheet" href="bulma.css">
+       
+
+    </head>
+    <body>
+        
+        <!-- Pageloader -->
+        <div class="pageloader"></div>
+       
+        <nav class="navbar mobile-navbar is-hidden-desktop is-hidden-tablet" aria-label="main navigation">
+            <!-- Brand -->
+            <div class="navbar-brand">
+                <a class="navbar>-item" href="home.html">
+                     <img src="images/logo/logo-white.svg" alt="">
+                </a>
+        
+                <!-- Sidebar mode toggler icon -->
+                <a id="sidebar-mode" class="navbar-item is-icon is-sidebar-toggler" href="javascript:void(0);">
+                    <i data-feather="sidebar"></i>
+                </a>
+        
+             
+            </div>
+         
+        </nav>
+        <!-- Main Sidebar-->
+        <div class="main-sidebar">
+            <div class="sidebar-brand">
+                <a href="#"><img src="images/logo/logo-white.svg" alt=""></a>
+            </div>
+            <div class="sidebar-inner">
+                <ul class="icon-menu">
+                  <!-- Shop sidebar trigger -->
+          
+                  <li>
+                    <a href="index.html" class="main_color eye-icon">
+                        <svg class="svg-inline--fa fa-video fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="video" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M336.2 64H47.8C21.4 64 0 85.4 0 111.8v288.4C0 426.6 21.4 448 47.8 448h288.4c26.4 0 47.8-21.4 47.8-47.8V111.8c0-26.4-21.4-47.8-47.8-47.8zm189.4 37.7L416 177.3v157.4l109.6 75.5c21.2 14.6 50.4-.3 50.4-25.8V127.5c0-25.4-29.1-40.4-50.4-25.8z"></path></svg>
+
+                    </a>
+                  </li>
+          
+          
+                  <li>
+                    <a id="open-filters" href="settings.html" class="secondary_color">
+                        <svg class="svg-inline--fa fa-cog fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"></path></svg>
+
+                    </a>
+                  </li>
+          
+          
+          
+                  <!-- Search trigger -->
+          
+                  <!-- User account -->
+          
+              </div>
+        </div>
+        <!-- /Main Sidebar-->
+        
+    
+        
+       
+        
+        <!-- Main wrapper -->
+        <div class="shop-wrapper">
+      
+            <div class="search-overlay"></div>
+            
+            <!-- Search input -->
+            <div class="search-input-wrapper is-desktop is-hidden">
+                <div class="field">
+                    <div class="control">
+                        <input type="text" name="search" autofocus required>
+                        <span id="clear-search" role="button"><i data-feather="x"></i></span>
+                        <span class="search-help">Enter a search</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Main section -->
+            <div class="section">
+                <!-- Container -->
+                <div class="mainSection">
+        
+                    <!-- Account Layout -->
+                    <div class="columns account-header">
+                        <div class="column  is-tablet-landscape-padded">
+                            <!-- Title -->
+                            <div class="account-title">
+                                <h2>Camera Stream</h2>
+                                <img class="brand-filigrane" src="images/logo/logo-grey.svg" alt="">
+                            </div>
+        
+                             <!-- Account tabs -->
+                             <div class="tabs-wrapper underline-tabs animated-tabs">
+                                <div class="tabs">
+                                    <ul>
+                                        <li class="is-active" data-tab="t1"><a> Camera 1</a></li>
+                                        <li data-tab="t2"><a>Camera 2</a></li>
+                                        <li data-tab="t3"><a> Both </a></li>
+                                    </ul>
+                                </div>
+                                <div id="t1" data-content="t1" class="navtab-content is-active">
+                                    
+                                
+                                 
+                                        <!-- Chosen select -->
+                                        <div class="flat-card is-auto is-element-details">
+                                            <div class="columns  is-vcentered">
+                                                
+                                                <div class="column is-component no-pad">
+                                                  
+                                                      <div id="container"></div>
+                                                      
+                                                        <!-- begin svg overlay -->
+                                                      <div id="one"> <svg height='100%'  width="100%" preserveAspectRatio='none'>
+                                                        <rect id="first" stroke='black' fill='none'/>
+                                            
+                                            
+                                                        <rect id="first" stroke='black' fill='none' />
+                                                        <rect id="first_fill" stroke='black' fill='black' />
+                                                        <text id="first_text" fill="white"></text>
+                                            
+                                            
+                                                        <rect id="second" stroke='deepskyblue' fill='none'/>
+                                                        <rect id="second_fill"  fill='deepskyblue'/>
+                                                        <text id="second_text" fill="white"></text>
+                                            
+                                                        
+                                                        <rect id="third" stroke='orangered' fill='none'/>
+                                                        <rect id="third_fill" fill='orangered' />
+                                                        <text id="third_text" fill="black"></text>
+                                            
+                                            
+                                            
+                                                        <rect id="fourth" stroke='springgreen' fill='none' />
+                                                        <rect id="fourth_fill" fill='springgreen' />
+                                                        <text id="fourth_text" fill="white"></text>
+                                            
+                                            
+                                            
+                                                        <rect id="fifth" stroke='red' fill='none'/>
+                                                        <rect id="fifth_fill" fill='red' />
+                                                        <text id="fifth_text" fill="white"></text>
+                                            
+                                            
+                                                        <circle fill='blue' cx="-5" cy="-5" r='5' />
+                                                        <circle fill='red' cx="-5" cy="-5" r='5' /> </svg> </div>
+            
+            
+            
+            
+                                                        <!-- end svg overlay -->
+                        
+
+                                                </div>
+                                           
+                                            </div>
+                                        </div>
+                                
+                                
+                                
+                                </div>
+                                <div id="t2"   data-content="t2" class="navtab-content">
+                                    
+                                
+                                 
+                                    <!-- Chosen select -->
+                                    <div class="flat-card is-auto is-element-details">
+                                        <div class="columns  is-vcentered">
+                                            
+                                            <div class="column is-component no-pad">
+                                           
+                                                  <div id="container1"></div>
+                                                                      
+
+
+                                         
+                                            </div>
+                                       
+                                        </div>
+                                    </div>
+                            
+                            
+                            
+                            
+                            </div>
+                            
+
+                            <div id="t3"  data-content="t3" class="navtab-content">
+                                    
+                                
+                                 
+                                <!-- Chosen select -->
+                                <div class="flat-card is-auto is-element-details">
+                                    <div class="columns  is-vcentered">
+                                        
+                                        <div class="column is-component no-pad">
+                                            
+                                                <div id="container3"></div>
+                                                
+                                                  
+
+
+                                       
+                                        </div>
+                                        <div class="column is-component no-pad">
+                                            
+                                          <div id="container4"></div>
+                                              
+
+
+                                   
+                                    </div>
+
+                                   
+                                    </div>
+                                </div>
+                        
+                        
+                        
+                        
+                        </div>
+
+
+                                     
+                
+                    <div id="entries"> Profile name: <input id="profileName" type="text" name="FirstName" value="Empty">
+                        <button class="button is-success" onclick="saveProfile()">Save Profile</button>  
+                        <button class="button is-danger" onclick="deleteProfile()">Delete Profile</button>
+                        <br> 
+                        Box name: <input id="boxName" oninput="boxName(this.value)"  type="text" name="E" value="Empty">
+
+                     
+                
+                            Select Box:                        
+
+
+                            <SELECT id="dropdown" name="dropdown" onchange="a = this.options[selectedIndex].value; changeVis(a)">
+                                <OPTION selected value="none">None</OPTION>
+                                <OPTION selected value="first">1</OPTION>
+                                <OPTION value="second">2</OPTION>
+                                <OPTION value="third">3</OPTION>
+                                <OPTION value="fourth">4</OPTION>
+                                <OPTION value="fifth">5</OPTION>
+                                </SELECT>
+                                
+                                <br>
+                               Select Profile: <select id="select" onchange="loadCoords()"> </select>
+                            </div>
+                    <style>
+                        #one {
+                            position: absolute; 
+                            top: 0px;
+                            z-index: 20;
+                            height: 100%;
+                        }
+                        tspan { 
+                            font-family: 'Roboto Mono', monospace;
+                        }
+                    </style>
+                                
+                                
+                            </div>
+
+                           
+        
+                        </div>
+                    </div>
+
+
+
+                   
+                </div>
+                <!-- /Container -->
+            </div>
+            <!-- /Main section -->
+        </div>
+        <!-- /Main wrapper -->
+        <!-- Concatenated plugins -->
+
+    
+ 
+    </body>  
+<script>
+     $('[data-tab]').on('click', function (e) {
+      console.log(this)
+      $(this).addClass('is-active').siblings('[data-tab]').removeClass('is-active')
+    console.log($('[data-content=' + $(this).data('tab') + ']'))
+    var tabContent = $('[data-content=' + $(this).data('tab') + ']')
+    tabContent.addClass('hello').addClass('is-active').siblings('[data-content]').removeClass('is-active')
+   
+})
+
+
+
+function updateDropdown() {
+        console.log("uopdate")
+
+       
+        $.getJSON('/json/profiles.json', function (data) {
+            var select = document.getElementById("select");
+            const objData = Object.entries(data)
+            select.options.length = 0;
+            for (const [key, value] of objData) {
+                console.log(key, value)
+                var option = document.createElement("option");
+                option.text = key;
+                select.add(option);
+            }
+        });
+    };
+    updateDropdown()
+
+    function loadCoords() {
+        var select = document.getElementById("select").value 
+        $.getJSON('/json/profiles.json', function (data) {
+            let values = data[ `${select}` ]
+            console.log(values)
+            for (const [key, value] of Object.entries(values)) {
+                var rect = document.getElementById(`${key}`)
+                x = value[0]
+                y = value[1]
+                width = value[2]
+                height = value[3]
+                if (key.includes("_fill")) {
+                    console.log(key, "texzt")
+                } else if (key.includes("_text")) {
+                    rect.innerHTML = value[4]
+                } else {
+                    var w = width / 4
+                    var w_empty = width / 2
+                    var both =  (width /4) + (height /4)
+                    var h = (height /4)
+                    var h_empty = height/2
+                    rect.setAttribute('stroke-dasharray', [w, w_empty, both, h_empty, both, w_empty, both, h_empty, h]);
+                }
+
+                rect.setAttribute('x', x);
+                rect.setAttribute('y', y);
+                rect.setAttribute('width', width);
+                rect.setAttribute('height', height);
+               
+
+                
+                
+            }
+        })
+    }
+
+    function saveProfile() {
+        var rectangles = ['first', 'second', 'third', 'fourth', 'fifth']
+        var dict = {}
+        removeGuides()
+        
+        for (var i = 0; i < rectangles.length; i++) {
+            id = rectangles[i]
+            console.log(id)
+            var save_rect = document.getElementById(`${id}`)
+            x = save_rect.getAttribute('x');
+            y = save_rect.getAttribute('y');
+            width = save_rect.getAttribute('width');
+            height = save_rect.getAttribute('height');
+            
+            dict[id] = [x, y, width, height]
+
+            var text_rect = document.getElementById(`${id}_fill`)
+            x = text_rect.getAttribute('x');
+            y = text_rect.getAttribute('y');
+            width = text_rect.getAttribute('width');
+            height = text_rect.getAttribute('height');
+
+            dict[`${id}_fill`] = [x, y, width, height]
+
+            var txt = document.getElementById(`${id}_text`)
+            x = txt.getAttribute('x');
+            y = txt.getAttribute('y');
+            width = txt.getAttribute('width');
+            height = txt.getAttribute('height');
+            inner_html = txt.innerHTML
+
+            dict[`${id}_text`] = [x, y, width, height, inner_html]
+
+
+        }
+        
+        
+        profile_name = document.getElementById("profileName").value
+        
+        
+        var profile = { [profile_name]: dict };
+        
+        console.log(JSON.stringify(profile))
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authority", JSON.stringify(profile));
+            },
+            url: "/add_profile",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(profile),
+        });
+        updateDropdown()
+    }
+
+    function deleteProfile() {
+        var select = document.getElementById("select");
+        console.log(JSON.stringify(select.value))
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authority", JSON.stringify(select.value));
+            },
+            url: "/delete_profile",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(select.value),
+        });
+        updateDropdown()
+    }
+
+
+    function swapLabels (e) {
+
+       
+            
+
+    
+            switch(e.code) {
+            case "Digit1":
+                changeVis("first")
+                break;
+            case "Digit2":
+                changeVis("second")
+                break;
+            case "Digit3":
+                changeVis("third")
+                break;
+            case "Digit4":
+                changeVis("fourth")
+                break;
+            case "Digit5":
+                changeVis("fifth")
+                break;
+            case "Space":
+                removeGuides()
+                break;
+            case "Delete":
+                removeRect();
+                removeGuides();
+                break;
+            default:
+                
+               
+                // code block
+            } 
+    
+        
+    }
+    
+
+
+    function boxName(value) {
+        var x = rect.getAttribute('x');
+        var y = rect.getAttribute('y');
+        var h = rect.getAttribute('height');
+        
+        var text_rect = document.getElementById(`${rect.id}_fill`)
+        text_rect.setAttribute('x', x);
+        text_rect.setAttribute('y', eval(y) + eval(h));
+       
+        text_rect.setAttribute('width', `${.6 * (value.length +1)}em`);
+        text_rect.setAttribute('height', '1.2em');
+
+        var txt = document.getElementById(`${rect.id}_text`)
+       
+        if (value.length == 0) {
+            text_rect.setAttribute('x', 0);
+            text_rect.setAttribute('y', 0);
+            text_rect.setAttribute('width', 0);
+            text_rect.setAttribute('height', 0);
+            txt.innerHTML = ''
+        } else {
+            
+            txt.innerHTML =`<tspan dy="1em">${value}</tspan>`
+            txt.setAttribute('x', x);
+            txt.setAttribute('y', eval(y) + eval(h));
+        }
+        
+    }
+
+  function setDropdown(val) {    
+    let element = document.getElementById("dropdown");
+    element.value = val;
+  }
+
+  function removeRect() {
+    rect.setAttribute('x', 0);
+    rect.setAttribute('y', 0);
+    rect.setAttribute('width', 0);
+    rect.setAttribute('height', 0);
+    var text_rect = document.getElementById(`${rect.id}_fill`)
+    text_rect.setAttribute('x', 0);
+    text_rect.setAttribute('y', 0);
+    text_rect.setAttribute('width', 0);
+    text_rect.setAttribute('height', 0);
+    var txt = document.getElementById(`${rect.id}_text`)
+    txt.innerHTML =``
+    txt.setAttribute('x', 0);
+    txt.setAttribute('y', 0);
+
+
+  }
+  function removeGuides() {
+    initial_pt.setAttribute('cx', -5);
+    initial_pt.setAttribute('cy', -5);
+    current_pt.setAttribute('cx', -5);
+    current_pt.setAttribute('cy', -5);
+  }
+
+
+  var canvas = document.getElementById("one");
+  rect = canvas.querySelector('rect')
+  initial_pt = canvas.querySelector('circle[fill=blue]')
+  
+  current_pt = canvas.querySelector('circle[fill=red]')
+  addListener(canvas);
+
+  function changeVis(a) {
+      console.log(a, "CHANGE VIUS")
+    if (a == 'none') {
+        removeGuides()
+    }
+    rect = document.getElementById(a)
+    setDropdown(a)
+  }
+  
+  
+  function screenToSVGCoords(canvas, e) {
+    // Read the SVG's bounding rectangle...
+    let canvasRect = canvas.getBoundingClientRect();
+
+    // ...and transform clientX / clientY to be relative to that rectangle
+    return {
+      x: e.clientX - canvasRect.x,
+      y: e.clientY - canvasRect.y
+    }
+  }
+  
+  function addListener(canvas) {
+    canvas.addEventListener('mousedown', e => {
+    window.initial_coords = screenToSVGCoords(canvas, e);
+    
+    document.addEventListener('mousemove', mousemoveWithKeys);
+    document.addEventListener('mouseup', mouseupWithKeys);
+  
+  });
+
+  }
+  
+  
+  function mousemoveWithKeys(e) {
+    var current_coords = screenToSVGCoords(canvas, e);
+    var is_constrained = e.shiftKey;
+    var is_from_center = e.altKey;
+    update(initial_coords, current_coords, is_constrained, is_from_center)
+  }
+  
+  
+  function update(initial_coords, current_coords, is_constrained, is_from_center) {
+      // let description = describe(`updates the rectangle \`rect\``);
+      let current_x = current_coords.x;
+      let current_y = current_coords.y;
+     
+      if (is_constrained) {
+          
+          // compute the distance on the X and Y coordiantes...
+              let deltaX = current_coords.x - initial_coords.x;
+              let deltaY = current_coords.y - initial_coords.y;
+          
+          // ...then find whichever is largest...
+              let delta = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+              
+          // ...which we then apply to both the X and Y coordinates
+          current_x = initial_coords.x + (Math.sign(deltaX) || 1) * delta;
+              current_y = initial_coords.y + (Math.sign(deltaY) || 1) * delta;
+          
+          }
+      
+      let x, y;
+      
+      let width = Math.abs(current_x - initial_coords.x);
+      let height = Math.abs(current_y - initial_coords.y);
+      
+      if (is_from_center) {
+          
+          let reflected_x = 2 * initial_coords.x - current_x;
+          let reflected_y = 2 * initial_coords.y - current_y;
+          
+          x = Math.min(reflected_x, current_x);
+          y = Math.min(reflected_y, current_y);
+          
+          width = 2 * width;
+          height = 2 * height;
+      
+      } else {
+          
+          x = Math.min(initial_coords.x, current_x);
+          y = Math.min(initial_coords.y, current_y);
+      
+      }
+      
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', width);
+      rect.setAttribute('height', height);
+      
+    //  width/ 3,  width /3, (width/ 3) + (height/3), height / 3, (width/ 3) + (height/3), (width/ 3), (height/ 3) 
+      var w = width / 4
+      var w_empty = width / 2
+      var both =  (width /4) + (height /4)
+      var h = (height /4)
+      var h_empty = height/2
+      rect.setAttribute('stroke-dasharray', [w, w_empty, both, h_empty, both, w_empty, both, h_empty, h]);
+      
+      initial_pt.setAttribute('cx', initial_coords.x);
+      initial_pt.setAttribute('cy', initial_coords.y);
+      current_pt.setAttribute('cx', current_coords.x);
+      current_pt.setAttribute('cy', current_coords.y);
+      var text_rect = document.getElementById(`${rect.id}_fill`)
+      text_rect.setAttribute('x', x);
+      text_rect.setAttribute('y', eval(y) + eval(height));
+      var txt = document.getElementById(`${rect.id}_text`)
+      txt.setAttribute('x', x);
+      txt.setAttribute('y', eval(y) + eval(height));
+
+
+
+      
+      // return description;
+  }
+  
+  function mousedownWithKeys(e) {
+    console.log("called")
+    var initial_coords = screenToSVGCoords(canvas, e);
+    document.addEventListener('mousemove', mousemoveWithKeys);
+    document.addEventListener('mouseup', mouseupWithKeys);
+  }
+  function mouseupWithKeys(e) {
+    document.removeEventListener('mousemove', mousemoveWithKeys);
+    document.removeEventListener('mouseup', mouseupWithKeys);
+  }
+
+
+
+    function formUnselected() {
+        document.addEventListener('keyup',swapLabels,true);
+     
+        document.getElementById("boxName").addEventListener("click", formSelected); 
+        document.getElementById("profileName").addEventListener("click", formSelected);
+        canvas.removeEventListener("click", formUnselected); 
+    }
+    formUnselected()
+  
+  
+    function formSelected() {
+        document.removeEventListener('keyup',swapLabels,true);
+        document.getElementById("boxName").removeEventListener("click", formSelected); 
+        document.getElementById("profileName").removeEventListener("click", formSelected); 
+        canvas.addEventListener("click", formUnselected); 
+    }
+
+
+
+
+ //   extras
+
+
+ function dropdown() {
+    
+    element = document.getElementById('dropdown')
+    var contains = element.classList.contains("is-active")
+    console.log(element)
+    switch (contains) {
+      case true:
+        element.classList.remove("is-active");
+        break;
+      case false:
+        element.classList.add("is-active");
+        break;
+      default:
+      // code block
+    }
+
+  }
+
+
+
+</script>
+</html>

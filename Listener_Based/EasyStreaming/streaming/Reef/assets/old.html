@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+        <!-- Required meta tags always come first -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="stylesheet" href="bulma.css">
+        <title> Reef : Ai processing made easy</title>
+        <link rel="icon" type="image/png" href="images/orange-fav.png" />
+
+
+        <!-- <script defer src="js/fontAwesome.js"></script> -->
+        <script src="js/jquery.js"></script>
+
+
+        <!--Core CSS -->
+        <link rel="stylesheet" href="css/orange-bulma.css">
+        <link rel="stylesheet" href="css/orange-core.css">
+        
+       
+        
+        <!-- plugins -->
+        <link rel="stylesheet" href="css/font-awesome.css">
+
+    </head>
+    <body>
+        
+        <!-- Pageloader -->
+        <div class="pageloader"></div>
+        <div class="infraloader is-active"></div>
+        <nav class="navbar mobile-navbar is-hidden-desktop is-hidden-tablet" aria-label="main navigation">
+            <!-- Brand -->
+            <div class="navbar-brand">
+                <a class="navbar>-item" href="home.html">
+                    <img src="images/logo/orange-icon.svg" alt="">
+                </a>
+        
+                <!-- Sidebar mode toggler icon -->
+                <a id="sidebar-mode" class="navbar-item is-icon is-sidebar-toggler" href="javascript:void(0);">
+                    <i data-feather="sidebar"></i>
+                </a>
+
+                <a id="sidebar-mode" class="navbar-item is-icon is-sidebar-toggler" href="javascript:void(0);">
+                    <i data-feather="wifi"></i>
+                </a>
+        
+             
+            </div>
+         
+        </nav>
+        <!-- Main Sidebar-->
+        <div class="main-sidebar">
+            <div class="sidebar-brand">
+                <a href="#"><img src="images/logo/orange-icon.svg" alt=""></a>
+            </div>
+            <div class="sidebar-inner">
+                <ul class="icon-menu">
+                    <!-- Shop sidebar trigger -->
+                  
+                    <li>
+                        <a href="orange-ai.html" ><i data-feather="eye"   ></i></a>
+                    </li>
+                    
+
+                    <li>
+                        <a  id="open-filters" href="#" ><i data-feather="settings" class="main_color"  ></i></a>
+                    </li>
+
+                    
+                    
+                    <!-- Search trigger -->
+                 
+                <!-- User account -->
+                
+            </div>
+        </div>
+        <!-- /Main Sidebar-->
+        
+    
+        
+        <!-- FAB -->
+        <div id="quickview-trigger"  class="menu-fab is-hidden-mobile">
+            
+                <div class="dropdown" id="myDropdown">
+                    <div class="dropdown-trigger">
+                      <button class="button" onclick=dropdown() aria-controls="dropdown-menu2">
+                        <span>Wifi <i class="fas fa-wifi"></i> </span>
+                        <span class="icon is-small">
+                          <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                      <div class="dropdown-content" id="dropdown-content">
+                        <button id="refresh" class="button" onclick=refreshConnections()>Refresh</button>
+                       
+                      </div>
+                    </div>
+                  </div>
+           
+        </div>
+        <!-- /FAB -->
+        <!-- Main wrapper -->
+        <div class="shop-wrapper">
+        
+            <!-- Search overlay -->
+            <div class="search-overlay"></div>
+            
+            <!-- Search input -->
+            <div class="search-input-wrapper is-desktop is-hidden">
+                <div class="field">
+                    <div class="control">
+                        <input type="text" name="search" autofocus required>
+                        <span id="clear-search" role="button"><i data-feather="x"></i></span>
+                        <span class="search-help">Enter a search</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Main section -->
+            <div class="section">
+                <!-- Container -->
+                <div class="mainSection">
+        
+                    <!-- Account Layout -->
+                    <div class="columns account-header">
+                        <div class="column  is-tablet-landscape-padded">
+                            <!-- Title -->
+                            <div class="account-title">
+                                <h2> Settings</h2>
+                                <img class="brand-filigrane" src="images/logo/orange-grey.svg" alt="">
+                            </div>
+        
+                             <!-- Account tabs -->
+                             <div class="tabs-wrapper underline-tabs animated-tabs">
+                                <div class="tabs">
+                                    <ul>
+                                        <li class="is-active" data-tab="t1"><a> Camera 1</a></li>
+                                        <li data-tab="t2"><a>Camera 2</a></li>
+                                        <li data-tab="t3"><a> Both </a></li>
+                                    </ul>
+                                </div>
+                                <div id="t1" class="navtab-content is-active">
+                                    
+                                
+                                 
+                                        <!-- Chosen select -->
+                                        <div class="flat-card is-auto is-element-details">
+                                            <div class="columns  is-vcentered">
+                                                
+                                                <div class="column is-component">
+                
+                                                                          
+
+                                                </div>
+                                           
+                                            </div>
+                                        </div>
+                                
+                                
+                                
+                                
+                                </div>
+                                <div id="t2" class="navtab-content is-active">
+                                    
+                                
+                                 
+                                    <!-- Chosen select -->
+                                    <div class="flat-card is-auto is-element-details">
+                                        <div class="columns  is-vcentered">
+                                            
+                                            <div class="column is-component">
+                       
+
+
+                                         
+                                            </div>
+                                       
+                                        </div>
+                                    </div>
+                            
+                            
+                            
+                            
+                            </div>
+                            
+
+                            <div id="t3" class="navtab-content is-active">
+                                    
+                                
+                                 
+                                <!-- Chosen select -->
+                                <div class="flat-card is-auto is-element-details">
+                                    <div class="columns  is-vcentered">
+                                        
+                                        <div class="column is-component">
+                
+                                                
+                                                  
+
+
+                                       
+                                        </div>
+                                        <div class="column is-component">
+                                            
+                                          <div id="container4"></div>
+                                              
+
+
+                                   
+                                    </div>
+
+                                   
+                                    </div>
+                                </div>
+                        
+                        
+                        
+                        
+                        </div>
+
+
+                            
+                                
+                                
+                            </div>
+
+                           
+        
+                        </div>
+                    </div>
+
+
+                   
+                </div>
+                <!-- /Container -->
+            </div>
+            <!-- /Main section -->
+        </div>
+
+
+
+
+
+  <div id="passwordModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <form class="box" onsubmit="event.preventDefault(); showInput();">
+            <div class="field">
+              <label for="" class="label">Password</label>
+              <div class="control has-icons-left">
+                <input id="user_input" name="password" type="password"  pattern=".{8,}"   required title="8 characters minimum" placeholder="*******" class="input">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              
+              <button onclick=closeModal()  aria-label="close" class="button ">Cancel</button>
+           
+              <button class="button is-success"> Submit</button>
+
+            </div>
+          </form>
+    </div>
+  </div>
+  </div>
+
+
+
+  <div id="disconnectModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <form class="box" onsubmit="event.preventDefault(); sendDisconnect();">
+            <div class="field">
+              <label for="" class="label">Disconnect Wifi</label>
+              <div class="control has-icons-left">
+              <p>Are you sure you want to Disconnect?</p>
+                
+              </div>
+            </div>
+            <div class="field">
+              
+              <button onclick=closeDisconnectModal()  aria-label="close" class="button">Cancel</button>
+           
+              <button class="button is-danger"> Yes</button>
+
+            </div>
+          </form>
+    </div>
+  </div>
+  </div>
+
+
+
+        <!-- /Main wrapper -->
+        <!-- Concatenated plugins -->
+        <script src="js/app.js"></script>
+
+
+    
+        <!-- Helios js -->
+
+        <script src="js/nephos.js"></script>    
+    
+ 
+    </body>  
+
+
+
+
+    <script>
+
+
+        var connections = { "Dasilva-Wifi": "WPA2", "ATTUMTu3Ys_2.4": "WPA2", "SKYNETgear-2.4": "WPA2", Spider: "WPA2", xfinitywifi: "--", "33333-Wifi": "WPA2", "2222-Wifi": "WPA2","qweewqe-Wifi": "WPA2","eeeeee-Wifi": "WPA2",}
+        
+        function test() { 
+          $.ajax({
+                    type: 'POST',
+                    url: "/yeet",
+                    contentType: 'application/json;charset=UTF-8',
+                    data: JSON.stringify({ "hello" : "test"}),
+                    success:function(data) {
+                      console.log(data, "success")
+                    }
+        
+                });
+        }
+        function refreshConnections() { 
+          console.log("refresh connections")
+          document.getElementById("refresh").classList.add('is-loading');
+          $.ajax({
+                    type: 'POST',
+                    url: "/getConnections",
+                    contentType: 'application/json;charset=UTF-8',
+                    data: JSON.stringify({ "hello" : "test"}),
+                    success:function(data) {
+                      var fill_data = JSON.parse(data);
+                      console.log(fill_data)
+                      document.getElementById("refresh").classList.remove('is-loading');
+        
+                      fillConnections(fill_data)
+                    }
+        
+                });
+        
+        }
+        
+        function rebootDevice() {
+        
+        }
+        
+        function fillConnections(connections) {
+          document.getElementById('dropdown-content').innerHTML = '<button id="refresh" class="button" onclick=refreshConnections()>Refresh</button>';
+          for (let [SSID, Security] of Object.entries(connections)) {
+            
+            const div = document.createElement('a');
+            div.className = 'dropdown-item';
+        
+            
+            switch (Security) {
+                case 'WPA2':
+                    div.id = 'open-modal';
+        
+                    div.innerHTML = `${ SSID}<i class="fas fa-lock is-pulled-right"> </i> `;
+        
+                    div.addEventListener('click', function(event) {
+                           
+                            //send socket here to check for pwsd
+                            console.log(SSID, "locked")
+                            window.lockedSelector = SSID
+                            var modal = document.querySelector('#passwordModal');  // assuming you have only 1
+                            var html = document.querySelector('html');
+                            modal.classList.add('is-active');
+                            html.classList.add('is-clipped');
+                            
+                            modal.querySelector('.modal-background').addEventListener('click', function(e) {
+                              e.preventDefault();
+                              modal.classList.remove('is-active');
+                              html.classList.remove('is-clipped');
+                        });
+                    })
+        
+                    document.getElementById('dropdown-content').appendChild(div);
+        
+        
+                break;
+                case 'connected':
+                    div.id = 'open-modal';
+        
+                    div.innerHTML = `${ SSID} `
+                    ;
+                    div.classList.add('lightGreen')
+                    div.addEventListener('click', function(event) {
+                           
+                            //send socket here to check for pwsd
+                            console.log(SSID, "locked")
+                            window.lockedSelector = SSID
+                            var modal = document.querySelector('#disconnectModal');  // assuming you have only 1
+                            var html = document.querySelector('html');
+                            modal.classList.add('is-active');
+                            
+                            html.classList.add('is-clipped');
+                            
+                            modal.querySelector('.modal-background').addEventListener('click', function(e) {
+                              e.preventDefault();
+                              modal.classList.remove('is-active');
+                              html.classList.remove('is-clipped');
+                        });
+                    })
+        
+                    document.getElementById('dropdown-content').appendChild(div);
+        
+        
+                break;
+                default:
+                    div.id = 'no-modal';
+                    div.innerHTML = `${ SSID} `;
+        
+                    div.addEventListener('click', function(event) {
+                        var str  = this.innerHTML
+                        //send socket here
+                        console.log(str)
+                        $.ajax({
+                        type: 'POST',
+                        url: "/connect",
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify({ "connect" : str }),
+                    });
+        
+                    })
+                    document.getElementById('dropdown-content').appendChild(div);
+        
+        
+            }
+        
+        }
+        
+        
+        }
+        
+        
+        function dropdown() {
+            console.log("dropdown called")
+            var element = document.getElementById("myDropdown");
+            var contains = element.classList.contains("is-active")
+            console.log(contains)
+            switch (contains) {
+                case true:
+                    console.log("remove elem")
+                    element.classList.remove("is-active");
+                    break;
+                case false:
+                    element.classList.add("is-active");
+                    break;
+                default:
+                // code block
+            }
+        
+        }
+        
+        
+        function closeModal() {
+          console.log("close modal")
+            var modal = document.querySelector('#disconnectModal');   // assuming you have only 1
+            console.log(modal)
+            // var html = document.querySelector('html');
+            modal.classList.remove('is-active');
+            // html.classList.remove('is-clipped');
+        
+        
+        }
+        
+        function closeDisconnectModal() {
+            var modal = document.querySelector('#disconnectModal');   // assuming you have only 1
+            var html = document.querySelector('html');
+            modal.classList.remove('is-active');
+            html.classList.remove('is-clipped');
+        }
+        
+        function closeModal() {
+            var modal = document.querySelector('#passwordModal');   // assuming you have only 1
+            var html = document.querySelector('html');
+            modal.classList.remove('is-active');
+            html.classList.remove('is-clipped');
+        }
+        
+        
+        function closeAndConnect() {
+            var modal = document.querySelector('#passwordModal');  // assuming you have only 1
+            var html = document.querySelector('html');
+            modal.classList.remove('is-active');
+            html.classList.remove('is-clipped');
+            console.log("connecting")
+        
+        }
+        
+        
+        
+        
+        function showInput() {
+                t = document.getElementById("user_input");
+                console.log(t.value, window.lockedSelector, "valueeee")
+                $.ajax({
+                  type: 'POST',
+                  beforeSend: function(request) {
+                    request.setRequestHeader("Authority", JSON.stringify(lockedSelector));
+                  },
+        
+                  url: "/connect",
+                  contentType: 'application/json;charset=UTF-8',
+                  data: "test",
+                });
+        
+                closeAndConnect()
+        
+            }
+        
+        function sendDisconnect() {
+          console.log(lockedSelector, "disconnect")
+          $.ajax({
+            type: 'POST',
+            beforeSend: function(request) {
+              request.setRequestHeader("Authority", JSON.stringify(lockedSelector));
+            },
+        
+            url: "/disconnect",
+            contentType: 'application/json;charset=UTF-8',
+            data: "test",
+          });
+        
+        }
+        
+        // send socket with name to check in list on name click, if value in previous network list just connect
+        // case for password takew password do nmcli connect
+        
+        
+        
+        
+          </script>
+
+</html>

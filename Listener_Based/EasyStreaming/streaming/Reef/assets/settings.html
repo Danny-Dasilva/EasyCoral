@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings</title>
+  <link rel="stylesheet" href="bulma.css">
+
+  <!--Core CSS -->
+  <link rel="stylesheet" href="css/orange-bulma.css">
+  <link rel="stylesheet" href="css/orange-core.css">
+
+
+  <!-- <link rel="stylesheet" href="static/css/bulma.css"> -->
+  <script src="js/jquery.js"></script>
+</head>
+
+<body>
+
+
+  <!-- Pageloader -->
+  <div class="pageloader"></div>
+  
+  <nav class="navbar mobile-navbar is-hidden-desktop is-hidden-tablet" aria-label="main navigation">
+    <!-- Brand -->
+    <div class="navbar-brand">
+      <a class="navbar>-item" href="home.html">
+        <img src="images/logo/logo-white.svg" alt="">
+      </a>
+
+      <!-- Sidebar mode toggler icon -->
+      <a id="sidebar-mode" class="navbar-item is-icon is-sidebar-toggler" href="javascript:void(0);">
+        <i data-feather="sidebar"></i>
+      </a>
+
+      <a id="sidebar-mode" class="navbar-item is-icon is-sidebar-toggler" href="javascript:void(0);">
+        <i data-feather="wifi"></i>
+      </a>
+
+
+    </div>
+
+  </nav>
+
+  <!-- Main Sidebar-->
+  <div class="main-sidebar">
+    <div class="sidebar-brand">
+      <a href="#"><img src="images/logo/logo-white.svg" alt=""></a>
+    </div>
+    <div class="sidebar-inner">
+      <ul class="icon-menu">
+        <!-- Shop sidebar trigger -->
+
+        <li>
+          <a href="index.html" class="secondary_color eye-icon">
+            <svg class="svg-inline--fa fa-video fa-w-18" aria-hidden="true" data-prefix="fas" data-icon="video" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M336.2 64H47.8C21.4 64 0 85.4 0 111.8v288.4C0 426.6 21.4 448 47.8 448h288.4c26.4 0 47.8-21.4 47.8-47.8V111.8c0-26.4-21.4-47.8-47.8-47.8zm189.4 37.7L416 177.3v157.4l109.6 75.5c21.2 14.6 50.4-.3 50.4-25.8V127.5c0-25.4-29.1-40.4-50.4-25.8z"></path></svg>
+
+
+          </a>
+        </li>
+
+
+        <li>
+          <a id="open-filters" href="#" class="main_color">
+            <svg class="svg-inline--fa fa-cog fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M444.788 291.1l42.616 24.599c4.867 2.809 7.126 8.618 5.459 13.985-11.07 35.642-29.97 67.842-54.689 94.586a12.016 12.016 0 0 1-14.832 2.254l-42.584-24.595a191.577 191.577 0 0 1-60.759 35.13v49.182a12.01 12.01 0 0 1-9.377 11.718c-34.956 7.85-72.499 8.256-109.219.007-5.49-1.233-9.403-6.096-9.403-11.723v-49.184a191.555 191.555 0 0 1-60.759-35.13l-42.584 24.595a12.016 12.016 0 0 1-14.832-2.254c-24.718-26.744-43.619-58.944-54.689-94.586-1.667-5.366.592-11.175 5.459-13.985L67.212 291.1a193.48 193.48 0 0 1 0-70.199l-42.616-24.599c-4.867-2.809-7.126-8.618-5.459-13.985 11.07-35.642 29.97-67.842 54.689-94.586a12.016 12.016 0 0 1 14.832-2.254l42.584 24.595a191.577 191.577 0 0 1 60.759-35.13V25.759a12.01 12.01 0 0 1 9.377-11.718c34.956-7.85 72.499-8.256 109.219-.007 5.49 1.233 9.403 6.096 9.403 11.723v49.184a191.555 191.555 0 0 1 60.759 35.13l42.584-24.595a12.016 12.016 0 0 1 14.832 2.254c24.718 26.744 43.619 58.944 54.689 94.586 1.667 5.366-.592 11.175-5.459 13.985L444.788 220.9a193.485 193.485 0 0 1 0 70.2zM336 256c0-44.112-35.888-80-80-80s-80 35.888-80 80 35.888 80 80 80 80-35.888 80-80z"></path></svg>
+                        
+
+          </i></a>
+        </li>
+
+
+        <li>
+          <a onclick="restartServer()" class="main_color">
+            <svg class="svg-inline--fa fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="power-off" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-power-off fa-w-16 fa-5x"><path fill="currentColor" d="M400 54.1c63 45 104 118.6 104 201.9 0 136.8-110.8 247.7-247.5 248C120 504.3 8.2 393 8 256.4 7.9 173.1 48.9 99.3 111.8 54.2c11.7-8.3 28-4.8 35 7.7L162.6 90c5.9 10.5 3.1 23.8-6.6 31-41.5 30.8-68 79.6-68 134.9-.1 92.3 74.5 168.1 168 168.1 91.6 0 168.6-74.2 168-169.1-.3-51.8-24.7-101.8-68.1-134-9.7-7.2-12.4-20.5-6.5-30.9l15.8-28.1c7-12.4 23.2-16.1 34.8-7.8zM296 264V24c0-13.3-10.7-24-24-24h-32c-13.3 0-24 10.7-24 24v240c0 13.3 10.7 24 24 24h32c13.3 0 24-10.7 24-24z" class=""></path></svg>
+          </a>
+        </li>
+
+
+        <!-- Search trigger -->
+
+        <!-- User account -->
+
+    </div>
+  </div>
+  <!-- /Main Sidebar-->
+  <!-- FAB -->
+  <div id="quickview-trigger" class="menu-fab is-hidden-mobile">
+    <div class="dropdown" id="myDropdown">
+      <div class="dropdown-trigger">
+        <button class="button" id="dropdown-button" aria-controls="dropdown-menu2">
+          <span>Wifi
+              &nbsp;
+          </span>
+          <span class="icon is-small">
+            <svg class="svg-inline--fa fa-wifi fa-w-20" aria-hidden="true" data-prefix="fas" data-icon="wifi" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M634.91 154.88C457.74-8.99 182.19-8.93 5.09 154.88c-6.66 6.16-6.79 16.59-.35 22.98l34.24 33.97c6.14 6.1 16.02 6.23 22.4.38 145.92-133.68 371.3-133.71 517.25 0 6.38 5.85 16.26 5.71 22.4-.38l34.24-33.97c6.43-6.39 6.3-16.82-.36-22.98zM320 352c-35.35 0-64 28.65-64 64s28.65 64 64 64 64-28.65 64-64-28.65-64-64-64zm202.67-83.59c-115.26-101.93-290.21-101.82-405.34 0-6.9 6.1-7.12 16.69-.57 23.15l34.44 33.99c6 5.92 15.66 6.32 22.05.8 83.95-72.57 209.74-72.41 293.49 0 6.39 5.52 16.05 5.13 22.05-.8l34.44-33.99c6.56-6.46 6.33-17.06-.56-23.15z"></path></svg>
+         
+          </span>
+          
+
+          <span class="icon is-small">
+            <svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path></svg>
+          </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+        <div class="dropdown-content" id="dropdown-content">
+          <button id="refresh" class="button" onclick=refreshConnections()>Refresh</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /FAB -->
+  <!-- Main wrapper -->
+  <div class="shop-wrapper">
+
+    <!-- Search overlay -->
+    <div class="search-overlay"></div>
+
+    <!-- Search input -->
+    <div class="search-input-wrapper is-desktop is-hidden">
+      <div class="field">
+        <div class="control">
+          <input type="text" name="search" autofocus required>
+          <span id="clear-search" role="button"><i data-feather="x"></i></span>
+          <span class="search-help">Enter a search</span>
+        </div>
+      </div>
+    </div>
+    <!-- Main section -->
+    <div class="section">
+      <!-- Container -->
+      <div class="mainSection">
+
+        <!-- Account Layout -->
+        <div class="columns account-header">
+          <div class="column  is-tablet-landscape-padded">
+            <!-- Title -->
+            <div class="account-title">
+              <h2> Settings</h2>
+              <img class="brand-filigrane" src="images/logo/logo-grey.svg" alt="">
+            </div>
+
+            <!-- Account tabs -->
+            <div class="tabs-wrapper underline-tabs animated-tabs">
+              <div class="tabs">
+                <ul>
+                  <li class="is-active" data-tab="t1"><a>Updates</a></li>
+                  <li data-tab="t2" ><a>Set Ip</a></li>
+                  <li data-tab="t3"><a> Configure Pipeline </a></li>
+                </ul>
+              </div>
+              <div id="t1"  data-content="t1" class="navtab-content is-active">
+
+                <div class="columns">
+                  <div class="column "></div>
+                  <div class="column column is-two-fifths">
+
+
+
+
+                    <div class="flat-card">
+                      <div id="account-main-placeholder" class="main-placeholder">
+                        <div class="placeholder-content">
+                          <img src="images/svgs/dive_down.svg" alt="">
+    
+                          <h3 id="version">A new Update may be available</h3>
+                          <p class="text-wrap"> Press the button below to check for Updates</p>
+                          <div id="notifications" class="button-wrap notifications">
+                            <a href="#" onclick=checkUpdate() class="button big-button notifications-button rounded raised">
+                             
+                             
+                              <span class="icon">
+                                <svg class="svg-inline--fa fa-cloud-download-alt fa-w-20" aria-hidden="true" data-prefix="fas" data-icon="cloud-download-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7.1 5.4.2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4zm-132.9 88.7L299.3 420.7c-6.2 6.2-16.4 6.2-22.6 0L171.3 315.3c-10.1-10.1-2.9-27.3 11.3-27.3H248V176c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16v112h65.4c14.2 0 21.4 17.2 11.3 27.3z"></path></svg>
+                           
+                              </span>
+                              
+                                &nbsp;
+                                   &nbsp;Check for update</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="column "></div>
+                </div>
+
+                
+
+
+
+
+              </div>
+              <div id="t2" data-content="t2"  class="navtab-content">
+
+
+
+                <!-- Chosen select -->
+                <div class="flat-card is-auto is-element-details">
+                  <div class="columns  is-vcentered">
+
+                    <div class="column is-component">
+
+
+
+
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+              </div>
+
+
+              <div id="t3" data-content="t3" class="navtab-content ">
+
+
+
+                <div class="columns">
+                  <div class="column "></div>
+                  <div class="column column is-two-fifths">
+
+
+
+
+                    <div class="flat-card">
+                      <div id="account-main-placeholder" class="main-placeholder">
+                        <div class="placeholder-content">
+                      
+                          <h3 id="version">A new Update may be available</h3>
+                          <p class="text-wrap"> Press the button below to check for Updates</p>
+                          <div id="notifications" class="button-wrap notifications">
+                            
+
+
+                            <div id="boxesDropdown" class="dropdown">
+                              <div id="enable-boxes" class="dropdown-trigger">
+                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                  <span>Enable Boxes</span>
+                                  <span class="icon is-small">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                  </span>
+                                </button>
+                              </div>
+                              <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                  <a onclick="toggleBoxes('on')" href="#" class="dropdown-item">
+                                    On
+                                  </a>
+                                  <a  onclick="toggleBoxes('off')" class="dropdown-item">
+                                    Off
+                                  </a>
+                                 
+                                </div>
+                              </div>
+                            </div>
+
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
+                            <a href="#"  onclick="restartServer()" class="button big-button notifications-button rounded raised">
+                             
+                             
+                              <span class="icon">
+                                <svg class="svg-inline--fa fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="power-off" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-power-off fa-w-16 fa-5x"><path fill="currentColor" d="M400 54.1c63 45 104 118.6 104 201.9 0 136.8-110.8 247.7-247.5 248C120 504.3 8.2 393 8 256.4 7.9 173.1 48.9 99.3 111.8 54.2c11.7-8.3 28-4.8 35 7.7L162.6 90c5.9 10.5 3.1 23.8-6.6 31-41.5 30.8-68 79.6-68 134.9-.1 92.3 74.5 168.1 168 168.1 91.6 0 168.6-74.2 168-169.1-.3-51.8-24.7-101.8-68.1-134-9.7-7.2-12.4-20.5-6.5-30.9l15.8-28.1c7-12.4 23.2-16.1 34.8-7.8zM296 264V24c0-13.3-10.7-24-24-24h-32c-13.3 0-24 10.7-24 24v240c0 13.3 10.7 24 24 24h32c13.3 0 24-10.7 24-24z" class=""></path></svg>
+ 
+                              </span>
+                                 &nbsp;&nbsp; Restart
+                                  </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="column "></div>
+                </div>
+
+
+
+
+              </div>
+
+
+
+
+
+            </div>
+
+
+
+          </div>
+        </div>
+
+
+
+      </div>
+      <!-- /Container -->
+    </div>
+    <!-- /Main section -->
+  </div>
+
+
+
+
+
+  <div id="passwordModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <form class="box" onsubmit="event.preventDefault(); showInput();">
+        <div class="field">
+          <label for="" class="label">Password</label>
+          <div class="control has-icons-left">
+            <input id="user_input" name="password" type="password" pattern=".{8,}" required title="8 characters minimum"
+              placeholder="*******" class="input">
+              <span class="is-tiny">
+                
+                <svg class="svg-inline--fa fa-lock fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="lock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"></path></svg>
+              </span>
+          </div>
+        </div>
+        <div class = "error" id="passwordError"></div>
+        <div class="field">
+
+          <button type="button" onclick="closeModal('passwordModal')" aria-label="close" class="button ">Cancel</button>
+
+          <button id="submitPassword" class="button is-success"> Submit</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <div id="disconnectModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <form class="box" onsubmit="event.preventDefault(); sendDisconnect();">
+        <div class="field">
+          <label for="" class="label">Disconnect Wifi</label>
+          <div class="control has-icons-left">
+            <p>Are you sure you want to Disconnect?</p>
+
+          </div>
+        </div>
+        <div class="field">
+
+          <button type="button" onclick="closeModal('disconnectModal')" aria-label="close" class="button">Cancel</button>
+
+          <button class="button is-danger"> Yes</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <div id="noWifiModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <form class="box" onsubmit="event.preventDefault(); tempFunct();">
+        <div class="field has-text-centered">
+          <label for="" class="label">You are not currently connected to Wifi!</label>
+          <img class="modal-img is-square" src="images/svgs/shark_wifi.svg" alt="">
+          <div class="control has-text-centered">
+            <p>Connect to a network in the wifi panel</p>
+            <div>
+            
+              <button  type="button" onclick="closeModal('noWifiModal')" aria-label="close" class="button is-danger">Ok</button>
+  
+            </div>
+            
+            
+
+          </div>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <div id="updateUnavailableModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <form class="box" onsubmit="event.preventDefault(); tempFunct();">
+        <div class="field has-text-centered">
+          <label for="" class="label">Good news</label>
+          <img class="modal-img is-square" src="images/svgs/lady.svg" alt="">
+          <div class="control has-text-centered">
+            <p>You are currently running the latest software</p>
+            <div>
+              <p id="updateUnavailable"></p>
+              <button  type="button" onclick="closeModal('updateUnavailableModal')" aria-label="close" class="button is-danger">Ok</button>
+  
+            </div>
+            
+            
+
+          </div>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+  <div id="updateAvailableModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <form class="box" onsubmit="event.preventDefault(); updateAndReboot();">
+        <div class="field has-text-centered">
+          <label for="" class="label">A New Software Update Is Available</label>
+          <img class="modal-img" src="images/svgs/chest.svg" alt="">
+
+          <div class="control has-text-centered">
+            
+            <p>Update to the latest version below</p>
+            <p id="updateAvailable"></p>
+          </div>
+        </div>
+        <div class="field has-text-centered">
+
+
+          <button type="button" onclick="closeModal('updateAvailableModal')" aria-label="close" class="button">cancel</button>
+          <button id="rebootAndInstall" class="button notifications-alert-button">
+           
+           
+           
+            <span class="icon">
+
+              <svg class="svg-inline--fa fa-download fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path></svg>
+           
+            </span>
+           
+            &nbsp;   &nbsp;
+            Reboot and Install</a>
+
+          </button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <button onclick=test() aria-label="close" class="button">test</button>
+
+
+
+
+</body>
+
+
+
+<script>
+
+
+  var connections = { "Dasilva-Wifi": "WPA2", "ATTUMTu3Ys_2.4": "WPA2", "SKYNETgear-2.4": "WPA2", Spider: "WPA2", xfinitywifi: "--", "33333-Wifi": "WPA2", "2222-Wifi": "WPA2", "qweewqe-Wifi": "WPA2", "eeeeee-Wifi": "WPA2", }
+  // $.ajax({
+  //     type: 'POST',
+  //     url: "/getVersion",
+  //     contentType: 'application/json;charset=UTF-8',
+  //     data: JSON.stringify({ "hello": "test" }),
+  //     success: function (data) {
+  //       var element = document.getElementById('version');
+  //       version = JSON.parse(data)
+        
+  //       element.innerHTML = `Current Version is: ${version}`;
+  //     }
+
+  //   });
+  
+
+  function toggleBoxes(toggle){
+      
+
+    $.ajax({
+        type: 'POST',
+        url: "/toggleBoxes",
+        beforeSend: function (request) {
+        request.setRequestHeader("Authority", toggle);
+         },
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify("test"),
+        });
+
+    }
+
+
+  function restartServer(){
+        $.ajax({
+        type: 'POST',
+        url: "/restartServer",
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify("test"),
+        });
+
+    }
+    
+  function refreshConnections() {
+    console.log("refresh connections")
+    document.getElementById("refresh").classList.add('is-loading');
+    $.ajax({
+      type: 'POST',
+      url: "/getConnections",
+      contentType: 'application/json;charset=UTF-8',
+      data: JSON.stringify({ "hello": "test" }),
+      success: function (data) {
+        var fill_data = JSON.parse(data);
+        console.log(fill_data)
+        document.getElementById("refresh").classList.remove('is-loading');
+
+        fillConnections(fill_data)
+      }
+
+    });
+
+  }
+
+  function rebootDevice() {
+
+  }
+
+  function fillConnections(connections) {
+    document.getElementById('dropdown-content').innerHTML = '<button id="refresh" class="button" onclick=refreshConnections()>Refresh</button>';
+    for (let [SSID, Security] of Object.entries(connections)) {
+
+      const div = document.createElement('a');
+      div.className = 'dropdown-item';
+
+      console.log(Security)
+      switch (Security) {
+        
+        case true:
+          div.id = 'open-modal';
+
+          div.innerHTML = `${SSID}  <span class="icon is-small"> <svg class="svg-inline--fa fa-lock fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="lock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"></path></svg></span>`;
+
+          div.addEventListener('click', function (event) {
+            //send socket here to check for pwsd
+            console.log(SSID, "locked")
+            window.lockedSelector = SSID
+            createModal('#passwordModal')
+          })
+
+          document.getElementById('dropdown-content').appendChild(div);
+
+
+          break;
+        case 'connected':
+          div.id = 'open-modal';
+
+          div.innerHTML = `${SSID} `;
+          div.classList.add('lightGreen')
+          div.addEventListener('click', function (event) {
+
+            console.log(SSID, "locked")
+            window.lockedSelector = SSID
+            createModal('#disconnectModal');
+          })
+
+          document.getElementById('dropdown-content').appendChild(div);
+
+
+          break;
+        default:
+          div.id = 'no-modal';
+          div.innerHTML = `${SSID} `;
+
+          div.addEventListener('click', function (event) {
+            var str = this.innerHTML
+            //send socket here
+            console.log(str)
+            $.ajax({
+              type: 'POST',
+              url: "/connect",
+              contentType: 'application/json;charset=UTF-8',
+              data: JSON.stringify({ "connect": str }),
+
+              success: function (data) {
+                refreshConnections()
+              }
+            });
+            
+          })
+          document.getElementById('dropdown-content').appendChild(div);
+
+
+      }
+
+    }
+
+
+  }
+  var button = document.getElementById("dropdown-button");
+    var element = document.getElementById("myDropdown");
+    button.addEventListener('click', () => {
+      element.classList.toggle('is-active');
+    });
+
+  // fix this later
+
+  var box_button = document.getElementById("enable-boxes");
+    var box_element = document.getElementById("boxesDropdown");
+    box_button.addEventListener('click', () => {
+      box_element.classList.toggle('is-active');
+    });
+
+
+    $('[data-tab]').on('click', function (e) {
+      console.log(this)
+      $(this).addClass('is-active').siblings('[data-tab]').removeClass('is-active')
+    console.log($('[data-content=' + $(this).data('tab') + ']'))
+    var tabContent = $('[data-content=' + $(this).data('tab') + ']')
+    tabContent.addClass('hello').addClass('is-active').siblings('[data-content]').removeClass('is-active')
+   
+})
+
+
+
+  
+
+
+  function closeModal(selector) {
+    var modal = document.querySelector(`#${selector}`);   // assuming you have only 1
+    var html = document.querySelector('html');
+    modal.classList.remove('is-active');
+    html.classList.remove('is-clipped');
+  }
+
+
+
+
+  function showInput() {
+    t = document.getElementById("user_input");
+    error = document.getElementById("passwordError");
+    btn = document.getElementById("submitPassword")
+    btn.classList.add('is-loading');
+
+    connect = {[window.lockedSelector] : t.value}
+    console.log(connect,  "valueeee")
+    $.ajax({
+      type: 'POST',
+      beforeSend: function (request) {
+        request.setRequestHeader("Authority", JSON.stringify(connect));
+      },
+
+      url: "/connect",
+      contentType: 'application/json;charset=UTF-8',
+      data: "test",
+      success: function (data) {
+        err = data.includes("Error");
+        if (err) {
+          error.innerHTML = data
+          btn.classList.remove('is-loading');
+        } else {
+          closeModal('passwordModal')
+          refreshConnections()
+        }
+        
+      }
+
+    });
+
+    
+
+  }
+
+  function sendDisconnect() {
+    console.log(lockedSelector, "disconnect")
+    $.ajax({
+      type: 'POST',
+      beforeSend: function (request) {
+        request.setRequestHeader("Authority", JSON.stringify(lockedSelector));
+      },
+
+      url: "/disconnect",
+      contentType: 'application/json;charset=UTF-8',
+      data: "test",
+      success: function (data) {
+        console.log("disconnect", data, "ahhhhhhhhhhhh")
+        closeModal('disconnectModal')
+        refreshConnections()
+      } 
+
+    });
+    
+  }
+
+  // send socket with name to check in list on name click, if value in previous network list just connect
+  // case for password takew password do nmcli connect
+
+  function checkUpdate() {
+    console.log("called")
+    $.ajax({
+      type: 'POST',
+      url: "/checkUpdate",
+      contentType: 'application/json;charset=UTF-8',
+      data: JSON.stringify({ "hello": "test" }),
+      success: function (data) {
+        var return_data = JSON.parse(data);
+
+        if (typeof return_data == 'object') {
+
+          switch (return_data.outdated) {
+            case false:
+
+              var element = document.getElementById('updateUnavailable');
+              element.innerHTML = `latest version: ${return_data.latest_version}`;
+              createModal('#updateUnavailableModal')
+
+              break;
+            case true:
+              var element = document.getElementById('updateAvailable');
+              element.innerHTML = `latest version: ${return_data.latest_version}`;
+              var button = document.getElementById('notifications')
+              button.innerHTML=` <a href="#" onclick=checkUpdate() class="button big-button notifications-alert-button rounded raised">
+                          <i class="fas fa-download"></i>
+                          &nbsp;
+                          Update Available!</a>   <span class="badge">!</span>`
+
+              createModal('#updateAvailableModal')
+
+              break;
+            default:
+              console.log("error")
+          }
+        } else {
+          createModal('#noWifiModal')
+
+        }
+
+      }
+
+    });
+
+
+  }
+
+  function createModal(identifier) {
+    var modal = document.querySelector(identifier);  // assuming you have only 1
+    var html = document.querySelector('html');
+    modal.classList.add('is-active');
+    html.classList.add('is-clipped');
+    modal.querySelector('.modal-background').addEventListener('click', function (e) {
+      e.preventDefault();
+      modal.classList.remove('is-active');
+      html.classList.remove('is-clipped');
+    });
+  }
+  function tempFunct() {
+    console.log("yeet")
+  }
+  function updateAndReboot(){
+    document.getElementById("rebootAndInstall").classList.add('is-loading');
+    $.ajax({
+      type: 'POST',
+      url: "/updateAndReboot",
+      contentType: 'application/json;charset=UTF-8',
+      data: JSON.stringify({ "hello": "test" }),
+
+    });
+
+  }
+</script>
+
+</html>

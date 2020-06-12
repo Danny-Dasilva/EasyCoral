@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settings</title>
+    <link rel="stylesheet" href="bulma.css">
+  
+            <!--Core CSS -->
+            <link rel="stylesheet" href="css/orange-bulma.css">
+            <link rel="stylesheet" href="css/orange-core.css">
+     
+
+    <!-- <link rel="stylesheet" href="static/css/bulma.css"> -->
+    <script defer src="js/fontAwesome.js"></script>
+    <script src="js/jquery.js"></script>
+  </head>
+  <body>
+  <section class="section">
+    <div class="dropdown" id="myDropdown">
+        <div class="dropdown-trigger">
+          <button class="button" onclick=dropdown() aria-controls="dropdown-menu2">
+            <span>Wifi <i class="fas fa-wifi"></i> </span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+          <div class="dropdown-content" id="dropdown-content">
+            <button id="refresh" class="button" onclick=refreshConnections()>Refresh</button>
+           
+          </div>
+        </div>
+      </div>
+  </section>
+
+
+
+  
+
+  <div id="passwordModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <form class="box" onsubmit="event.preventDefault(); showInput();">
+            <div class="field">
+              <label for="" class="label">Password</label>
+              <div class="control has-icons-left">
+                <input id="user_input" name="password" type="password"  pattern=".{8,}"   required title="8 characters minimum" placeholder="*******" class="input">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              
+              <button onclick=closeModal()  aria-label="close" class="button ">Cancel</button>
+           
+              <button class="button is-success"> Submit</button>
+
+            </div>
+          </form>
+    </div>
+  </div>
+  </div>
+
+
+
+  <div id="disconnectModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <form class="box" onsubmit="event.preventDefault(); sendDisconnect();">
+            <div class="field">
+              <label for="" class="label">Disconnect Wifi</label>
+              <div class="control has-icons-left">
+              <p>Are you sure you want to Disconnect?</p>
+                
+              </div>
+            </div>
+            <div class="field">
+              
+              <button onclick=closeDisconnectModal()  aria-label="close" class="button">Cancel</button>
+           
+              <button class="button is-danger"> Yes</button>
+
+            </div>
+          </form>
+    </div>
+  </div>
+  </div>
+
+
+  <button onclick=test()  aria-label="close" class="button">test</button>
+
+
+           
+        
+
+  </body>
+
+
+
+  <script>
+
+
+var connections = { "Dasilva-Wifi": "WPA2", "ATTUMTu3Ys_2.4": "WPA2", "SKYNETgear-2.4": "WPA2", Spider: "WPA2", xfinitywifi: "--", "33333-Wifi": "WPA2", "2222-Wifi": "WPA2","qweewqe-Wifi": "WPA2","eeeeee-Wifi": "WPA2",}
+
+function test() { 
+  $.ajax({
+            type: 'POST',
+            url: "/yeet",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({ "hello" : "test"}),
+            success:function(data) {
+              console.log(data, "success")
+            }
+
+        });
+}
+function refreshConnections() { 
+  console.log("refresh connections")
+  document.getElementById("refresh").classList.add('is-loading');
+  $.ajax({
+            type: 'POST',
+            url: "/getConnections",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({ "hello" : "test"}),
+            success:function(data) {
+              var fill_data = JSON.parse(data);
+              console.log(fill_data)
+              document.getElementById("refresh").classList.remove('is-loading');
+
+              fillConnections(fill_data)
+            }
+
+        });
+
+}
+
+function rebootDevice() {
+
+}
+
+function fillConnections(connections) {
+  document.getElementById('dropdown-content').innerHTML = '<button id="refresh" class="button" onclick=refreshConnections()>Refresh</button>';
+  for (let [SSID, Security] of Object.entries(connections)) {
+    
+    const div = document.createElement('a');
+    div.className = 'dropdown-item';
+
+    
+    switch (Security) {
+        case 'WPA2':
+            div.id = 'open-modal';
+
+            div.innerHTML = `${ SSID}<i class="fas fa-lock is-pulled-right"> </i> `;
+
+            div.addEventListener('click', function(event) {
+                   
+                    //send socket here to check for pwsd
+                    console.log(SSID, "locked")
+                    window.lockedSelector = SSID
+                    var modal = document.querySelector('#passwordModal');  // assuming you have only 1
+                    var html = document.querySelector('html');
+                    modal.classList.add('is-active');
+                    html.classList.add('is-clipped');
+                    
+                    modal.querySelector('.modal-background').addEventListener('click', function(e) {
+                      e.preventDefault();
+                      modal.classList.remove('is-active');
+                      html.classList.remove('is-clipped');
+                });
+            })
+
+            document.getElementById('dropdown-content').appendChild(div);
+
+
+        break;
+        case 'connected':
+            div.id = 'open-modal';
+
+            div.innerHTML = `${ SSID} `
+            ;
+            div.classList.add('lightGreen')
+            div.addEventListener('click', function(event) {
+                   
+                    //send socket here to check for pwsd
+                    console.log(SSID, "locked")
+                    window.lockedSelector = SSID
+                    var modal = document.querySelector('#disconnectModal');  // assuming you have only 1
+                    var html = document.querySelector('html');
+                    modal.classList.add('is-active');
+                    
+                    html.classList.add('is-clipped');
+                    
+                    modal.querySelector('.modal-background').addEventListener('click', function(e) {
+                      e.preventDefault();
+                      modal.classList.remove('is-active');
+                      html.classList.remove('is-clipped');
+                });
+            })
+
+            document.getElementById('dropdown-content').appendChild(div);
+
+
+        break;
+        default:
+            div.id = 'no-modal';
+            div.innerHTML = `${ SSID} `;
+
+            div.addEventListener('click', function(event) {
+                var str  = this.innerHTML
+                //send socket here
+                console.log(str)
+                $.ajax({
+                type: 'POST',
+                url: "/connect",
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({ "connect" : str }),
+            });
+
+            })
+            document.getElementById('dropdown-content').appendChild(div);
+
+
+    }
+
+}
+
+
+}
+
+
+function dropdown() {
+
+    var element = document.getElementById("myDropdown");
+    var contains = element.classList.contains("is-active")
+
+    switch (contains) {
+        case true:
+            element.classList.remove("is-active");
+            break;
+        case false:
+            element.classList.add("is-active");
+            break;
+        default:
+        // code block
+    }
+
+}
+
+
+function closeModal() {
+  console.log("close modal")
+    var modal = document.querySelector('#disconnectModal');   // assuming you have only 1
+    console.log(modal)
+    // var html = document.querySelector('html');
+    modal.classList.remove('is-active');
+    // html.classList.remove('is-clipped');
+
+
+}
+
+function closeDisconnectModal() {
+    var modal = document.querySelector('#disconnectModal');   // assuming you have only 1
+    var html = document.querySelector('html');
+    modal.classList.remove('is-active');
+    html.classList.remove('is-clipped');
+}
+
+function closeModal() {
+    var modal = document.querySelector('#passwordModal');   // assuming you have only 1
+    var html = document.querySelector('html');
+    modal.classList.remove('is-active');
+    html.classList.remove('is-clipped');
+}
+
+
+function closeAndConnect() {
+    var modal = document.querySelector('#passwordModal');  // assuming you have only 1
+    var html = document.querySelector('html');
+    modal.classList.remove('is-active');
+    html.classList.remove('is-clipped');
+    console.log("connecting")
+
+}
+
+
+
+
+function showInput() {
+        t = document.getElementById("user_input");
+        console.log(t.value, window.lockedSelector, "valueeee")
+        $.ajax({
+          type: 'POST',
+          beforeSend: function(request) {
+            request.setRequestHeader("Authority", JSON.stringify(lockedSelector));
+          },
+
+          url: "/connect",
+          contentType: 'application/json;charset=UTF-8',
+          data: "test",
+        });
+
+        closeAndConnect()
+
+    }
+
+function sendDisconnect() {
+  console.log(lockedSelector, "disconnect")
+  $.ajax({
+    type: 'POST',
+    beforeSend: function(request) {
+      request.setRequestHeader("Authority", JSON.stringify(lockedSelector));
+    },
+
+    url: "/disconnect",
+    contentType: 'application/json;charset=UTF-8',
+    data: "test",
+  });
+
+}
+
+// send socket with name to check in list on name click, if value in previous network list just connect
+// case for password takew password do nmcli connect
+
+
+
+
+  </script>
+  </html>

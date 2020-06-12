@@ -265,22 +265,14 @@ class StreamingServer:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
-    def __init__(self, csi_h264 = None, usb_h264 = None, bitrate=1000000, mdns_name=None, tcp_port=4665, web_port=5801, annexb_port=4666):
+    def __init__(self, bitrate=1000000, mdns_name=None, tcp_port=4665, web_port=5801, annexb_port=4666):
         self._bitrate = bitrate
-        self.usb_cam = usb_h264
-        self.csi_cam = csi_h264
-        self.csi_cam_thread = threading.Thread(target=self.write_csi)
-        self.usb_cam_thread = threading.Thread(target=self.write_usb)
         self._clients = AtomicSet()
         self._enabled_clients = AtomicSet()
         self._done = threading.Event()
         self._commands = queue.Queue()
         self._thread = threading.Thread(target=self._run, args=(mdns_name, tcp_port, web_port, annexb_port))
         self._thread.start()
-        if(self.csi_cam is not None):
-            self.csi_cam_thread.start()
-        # if(self.usb_cam is not None):
-        #     self.usb_cam_thread.start()
 
     def close(self):
         self._done.set()
@@ -363,31 +355,24 @@ class StreamingServer:
                 client.stop()
             logger.info('Done')
 
-    def write_csi(self):
-        while True:
-            if(self.csi_cam):
-                data = bytes(self.csi_cam)
-                assert data[0:4] == b'\x00\x00\x00\x01'
-                frame_type = data[4] & 0b00011111
-                if frame_type in ALLOWED_NALS:
-                    states = {client.send_video(frame_type, data) for client in self._enabled_clients}
-                    if ClientState.ENABLED_NEEDS_SPS in states:
-                        logger.info('Requesting key frame')
-                        #self._camera.request_key_frame()
-            sleep(0.0001)
+    def write_csi(self, data):
+        assert data[0:4] == b'\x00\x00\x00\x01'
+        frame_type = data[4] & 0b00011111
+        if frame_type in ALLOWED_NALS:
+            states = {client.send_video(frame_type, data) for client in self._enabled_clients}
                 
-    def write_usb(self):
-        while True:
-            if(self.usb_cam):
-                data = bytes(self.usb_cam)
-                assert data[0:4] == b'\x00\x00\x00\x01'
-                frame_type = data[4] & 0b00011111
-                if frame_type in ALLOWED_NALS:
-                    states = {client.send_usb_vid(frame_type, data) for client in self._enabled_clients}
-                    if ClientState.ENABLED_NEEDS_SPS in states:
-                        logger.info('Requesting key frame')
-                        #self._camera.request_key_frame()
-            sleep(0.0001)
+    # def write_usb(self):
+    #     while True:
+    #         if(self.usb_cam):
+    #             data = bytes(self.usb_cam)
+    #             assert data[0:4] == b'\x00\x00\x00\x01'
+    #             frame_type = data[4] & 0b00011111
+    #             if frame_type in ALLOWED_NALS:
+    #                 states = {client.send_usb_vid(frame_type, data) for client in self._enabled_clients}
+    #                 if ClientState.ENABLED_NEEDS_SPS in states:
+    #                     logger.info('Requesting key frame')
+    #                     #self._camera.request_key_frame()
+    #         sleep(0.0001)
 
 class ClientLogger(logging.LoggerAdapter):
     def process(self, msg, kwargs):
