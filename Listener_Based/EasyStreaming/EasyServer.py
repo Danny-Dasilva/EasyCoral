@@ -7,8 +7,8 @@ class EasyServer():
     def data(self,data):
         self.server.write_csi(data)
 
-    def aidata(self,data):
-        send_overlay(data) #calls svg overlay function in streaming server
+    def aidata(self, data):
+        self.server.send_overlay(data) #calls svg overlay function in streaming server
 
 class ServerType:
     Reef = StreamingServer

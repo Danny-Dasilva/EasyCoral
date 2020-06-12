@@ -361,18 +361,11 @@ class StreamingServer:
         if frame_type in ALLOWED_NALS:
             states = {client.send_video(frame_type, data) for client in self._enabled_clients}
                 
-    # def write_usb(self):
-    #     while True:
-    #         if(self.usb_cam):
-    #             data = bytes(self.usb_cam)
-    #             assert data[0:4] == b'\x00\x00\x00\x01'
-    #             frame_type = data[4] & 0b00011111
-    #             if frame_type in ALLOWED_NALS:
-    #                 states = {client.send_usb_vid(frame_type, data) for client in self._enabled_clients}
-    #                 if ClientState.ENABLED_NEEDS_SPS in states:
-    #                     logger.info('Requesting key frame')
-    #                     #self._camera.request_key_frame()
-    #         sleep(0.0001)
+    def write_usb(self, data):
+        assert data[0:4] == b'\x00\x00\x00\x01'
+        frame_type = data[4] & 0b00011111
+        if frame_type in ALLOWED_NALS:
+            states = {client.send_usb_vid(frame_type, data) for client in self._enabled_clients}
 
 class ClientLogger(logging.LoggerAdapter):
     def process(self, msg, kwargs):
