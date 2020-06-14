@@ -1,5 +1,5 @@
 from EasyCamera import Camera, CameraType, PipelineType
-from EasyAI import AI, TPUType, ModelType
+from AIManager.EasyAI import AI, TPUType, ModelType
 from EasyStreaming.EasyServer import EasyServer, ServerType
 from EasyStreaming.streaming.overlay import DetectConvert, ClassifyConvert
 
