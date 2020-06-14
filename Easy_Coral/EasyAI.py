@@ -84,9 +84,9 @@ class ModelType:
             tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id],"inference_time":inference_time})
         return(tempArray)
 
-    detectFace = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/Easy_Coral/AIManager/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"/home/mendel/EasyCoral/Easy_Coral/AIManager/models/face_labels.txt","size":(320,320),"runFunc":run_detect}
-    detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":"/home/mendel/EasyCoral/Easy_Coral/AIManager/models/mobilenet_v2_edgetpu_red.tflite","label":"/home/mendel/EasyCoral/Easy_Coral/AIManager/models/field_labels.txt","size":(300,300),"runFunc":run_detect}
-    classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":"/home/mendel/EasyCoral/Easy_Coral/AIManager/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":"/home/mendel/EasyCoral/Easy_Coral/AIManager/models/imagenet_labels.txt","size":(224,224),"runFunc":run_classify}
+    detectFace = {"modelType":"detect","engine":DetectionEngine,"path":"./models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":"./models/face_labels.txt","size":(320,320),"runFunc":run_detect}
+    detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":"./models/mobilenet_v2_edgetpu_red.tflite","label":"./models/field_labels.txt","size":(300,300),"runFunc":run_detect}
+    classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":"./models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":"./models/imagenet_labels.txt","size":(224,224),"runFunc":run_classify}
 
 class TPUType:
     DEVBOARD = "/dev/apex_0"

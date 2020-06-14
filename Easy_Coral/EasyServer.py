@@ -1,4 +1,5 @@
-from .streaming.Reef.StreamingServer import StreamingServer
+from EasyStreaming.Reef.StreamingServer import StreamingServer
+from EasyStreaming.overlay import DetectConvert, ClassifyConvert
 
 class EasyServer():
     def __init__(self, server_type, csi_h264 = None, usb_h264 = None):
@@ -9,6 +10,13 @@ class EasyServer():
 
     def aidata(self, data):
         self.server.send_overlay(data) #calls svg overlay function in streaming server
+    
+    def DetectConvert(data):
+        return DetectConvert.convert(data)
+
+    def ClassifyConvert(data):
+        return ClassifyConvert.convert(data)
+
 
 class ServerType:
     Reef = StreamingServer

@@ -1,7 +1,6 @@
 from EasyCamera import Camera, CameraType, PipelineType
-from AIManager.EasyAI import AI, TPUType, ModelType
-from EasyStreaming.EasyServer import EasyServer, ServerType
-from EasyStreaming.streaming.overlay import DetectConvert, ClassifyConvert
+from EasyAI import AI, TPUType, ModelType
+from EasyServer import EasyServer, ServerType
 
 from time import sleep
 
@@ -11,7 +10,7 @@ dev_board = AI(tpu_path=TPUType.DEVBOARD)
 
 def array_to_svg(ai_data):
     global reef_server
-    svg = DetectConvert.convert(ai_data)
+    svg = EasyServer.DetectConvert(ai_data)
     reef_server.aidata(svg) #gives svg to server
     #print(ai_data)
 
