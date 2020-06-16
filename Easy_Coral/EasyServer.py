@@ -1,5 +1,5 @@
-from EasyStreaming.Reef.StreamingServer import StreamingServer
-from EasyStreaming.overlay import DetectConvert, ClassifyConvert
+from .EasyStreaming.Reef.StreamingServer import StreamingServer
+from .EasyStreaming.overlay import DetectConvert, ClassifyConvert
 
 class EasyServer():
     def __init__(self, server_type, csi_h264 = None, usb_h264 = None):
