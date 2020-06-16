@@ -1,5 +1,10 @@
-from .EasyStreaming.Reef.StreamingServer import StreamingServer
-from .EasyStreaming.overlay import DetectConvert, ClassifyConvert
+#for use when running from git
+from EasyStreaming.Reef.StreamingServer import StreamingServer
+from EasyStreaming.overlay import DetectConvert, ClassifyConvert
+
+#for use in pip package
+#from .EasyStreaming.Reef.StreamingServer import StreamingServer
+#from .EasyStreaming.overlay import DetectConvert, ClassifyConvert
 
 class EasyServer():
     def __init__(self, server_type, csi_h264 = None, usb_h264 = None):
