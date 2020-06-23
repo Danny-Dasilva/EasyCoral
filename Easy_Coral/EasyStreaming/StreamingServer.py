@@ -717,6 +717,15 @@ class WsProtoClient(ProtoClient):
                     write_json('boxToggle', data)
                 elif data == "off":
                     write_json('boxToggle', data)
+            
+            if request.path == '/toggleAI':
+                data = request.headers['Authority']
+                if data == "on":
+                    data = { "status":"on"}
+                    write_json('enableAI', data)
+                elif data == "off":
+                    data = {"status":"off"}
+                    write_json('enableAI', data)
 
             
             if request.path == '/checkUpdate':
