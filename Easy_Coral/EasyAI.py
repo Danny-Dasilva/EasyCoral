@@ -106,7 +106,6 @@ class ModelType:
 
 
 class DetectFace(ModelType):
-    super().__init__()
     modelType = "detect"
     engine = DetectionEngine
     path = f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite"
@@ -116,7 +115,6 @@ class DetectFace(ModelType):
 
 
 class detectFRC(ModelType):
-    super().__init__()
     modelType = "detect"
     engine = DetectionEngine
     path = f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite"
