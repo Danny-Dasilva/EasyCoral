@@ -75,7 +75,7 @@ class AIModel():
             listener(data)
     
 class ModelType:
-    def run_classify(frame, engine, labels):
+    def run_classify(self, frame, engine, labels):
         start = time.monotonic()
         objs = engine.classify_with_input_tensor(frame)#add arguments
         inference_time = time.monotonic() - start
@@ -84,7 +84,7 @@ class ModelType:
             tempArray.append({"score":obj[1],"label":labels[obj[0]],"inference_time":inference_time})
         return(tempArray)
         
-    def run_detect(frame, engine, labels):
+    def run_detect(self, frame, engine, labels):
         start = time.monotonic()
         objs = engine.detect_with_input_tensor(frame)
         inference_time = time.monotonic() - start
@@ -99,14 +99,23 @@ class ModelType:
 
 
 class DetectFace(ModelType):
-    def __init__(self):
-        super().__init__()
-        self.modelType = "detect"
-        self.engine = DetectionEngine
-        self.path = f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite"
-        self.label = f"{dirname}/models/face_labels.txt","size":(320,320)
-        self.size = (320,320)
-        self.runFunc = "runFunc":run_detect
+    super().__init__()
+    modelType = "detect"
+    engine = DetectionEngine
+    path = f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite"
+    label = f"{dirname}/models/face_labels.txt"
+    size = (320,320)
+    runFunc = ModelType.run_detect
+
+
+class detectFRC(ModelType):
+    super().__init__()
+    modelType = "detect"
+    engine = DetectionEngine
+    path = f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite"
+    label = f"{dirname}/models/field_labels.txt"
+    size = (300,300)
+    runFunc = ModelType.run_detect
 
 class TPUType:
     DEVBOARD = "/dev/apex_0"
