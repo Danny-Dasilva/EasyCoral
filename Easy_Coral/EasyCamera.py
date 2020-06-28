@@ -77,6 +77,13 @@ class Sink():
     def add_listener(self, func):
         self.listeners.append(func)
 
+    def remove_listener(self, func):
+        target = 0
+        for idx, listener in enumerate(self.listeners):
+            if(listener == func):
+                target = idx
+        del(self.listeners[target])
+
     def sink_pull(self, sink):
         start = 0
         end = 0
