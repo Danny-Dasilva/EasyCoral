@@ -1,7 +1,7 @@
 # Example file for using pip package
 
-from Easy_Coral.EasyCamera import Camera, CameraType, PipelineType
-from Easy_Coral.EasyAI import AI, TPUType, ModelType
+from EasyCamera import Camera, CameraType, PipelineType
+from EasyAI import AI, TPUType, ModelType
 
 from time import sleep
 
@@ -17,7 +17,7 @@ csi_rgb = csi_cam.add_pipeline(size=Face_csi.res, frame_rate=30, pipeline_type=P
 
 csi_rgb.add_listener(Face_csi.data) #send RGB Frame to ai engine
 Face_csi.add_listener(print_data) #send AI data to print function
-Face_csi.remove_listener(print_data)
+#Face_csi.remove_listener(print_data)
 
 csi_cam.start()
 
