@@ -83,7 +83,7 @@ class Sink():
             if(listener == func):
                 target = idx
         del(self.listeners[target])
-
+    
     def sink_pull(self, sink):
         start = 0
         end = 0
