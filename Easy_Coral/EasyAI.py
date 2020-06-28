@@ -82,7 +82,7 @@ class AIModel():
             listener(data)
     
 class ModelType:
-    def run_classify(self, frame, engine, labels):
+    def run_classify(frame, engine, labels):
         start = time.monotonic()
         objs = engine.classify_with_input_tensor(frame)#add arguments
         inference_time = time.monotonic() - start
@@ -91,7 +91,7 @@ class ModelType:
             tempArray.append({"score":obj[1],"label":labels[obj[0]],"inference_time":inference_time})
         return(tempArray)
         
-    def run_detect(self, frame, engine, labels):
+    def run_detect(frame, engine, labels):
         start = time.monotonic()
         objs = engine.detect_with_input_tensor(frame)
         inference_time = time.monotonic() - start
