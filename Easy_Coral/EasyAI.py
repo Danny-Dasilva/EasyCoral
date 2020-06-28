@@ -54,6 +54,13 @@ class AIModel():
     def add_listener(self, func):
         self.listeners.append(func)
     
+    def remove_listener(self, func):
+        target = 0
+        for idx, listener in enumerate(self.listeners):
+            if(listener == func):
+                target = idx
+        del(self.listeners[target])
+    
     def data(self, data):
         self.frame = data
 
@@ -90,5 +97,11 @@ class ModelType:
     detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite","label":f"{dirname}/models/field_labels.txt","size":(300,300),"runFunc":run_detect}
     classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":f"{dirname}/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":f"{dirname}/models/imagenet_labels.txt","size":(224,224),"runFunc":run_classify}
 
+
+class DetectFace(ModelType):
+    def __init__(self):
+        super().__init__()
+        self.modelType = "detect"
+        self.engine = DetectionEngine
 class TPUType:
     DEVBOARD = "/dev/apex_0"
