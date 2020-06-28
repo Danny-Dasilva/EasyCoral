@@ -103,5 +103,10 @@ class DetectFace(ModelType):
         super().__init__()
         self.modelType = "detect"
         self.engine = DetectionEngine
+        self.path = f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite"
+        self.label = f"{dirname}/models/face_labels.txt","size":(320,320)
+        self.size = (320,320)
+        self.runFunc = "runFunc":run_detect
+
 class TPUType:
     DEVBOARD = "/dev/apex_0"
