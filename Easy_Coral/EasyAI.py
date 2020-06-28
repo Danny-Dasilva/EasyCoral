@@ -105,22 +105,22 @@ class ModelType:
     classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":f"{dirname}/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":f"{dirname}/models/imagenet_labels.txt","size":(224,224),"runFunc":run_classify}
 
 
-class DetectFace(ModelType):
-    modelType = "detect"
-    engine = DetectionEngine
-    path = f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite"
-    label = f"{dirname}/models/face_labels.txt"
-    size = (320,320)
-    runFunc = ModelType.run_detect
+# class DetectFace(ModelType):
+#     modelType = "detect"
+#     engine = DetectionEngine
+#     path = f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite"
+#     label = f"{dirname}/models/face_labels.txt"
+#     size = (320,320)
+#     runFunc = ModelType.run_detect
 
 
-class detectFRC(ModelType):
-    modelType = "detect"
-    engine = DetectionEngine
-    path = f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite"
-    label = f"{dirname}/models/field_labels.txt"
-    size = (300,300)
-    runFunc = ModelType.run_detect
+# class detectFRC(ModelType):
+#     modelType = "detect"
+#     engine = DetectionEngine
+#     path = f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite"
+#     label = f"{dirname}/models/field_labels.txt"
+#     size = (300,300)
+#     runFunc = ModelType.run_detect
 
 class TPUType:
     DEVBOARD = "/dev/apex_0"
