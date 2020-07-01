@@ -6,14 +6,13 @@ import time
 from time import sleep
 import re
 import os
+import collections 
 dirname, filename = os.path.split(os.path.abspath(__file__))
 
 class AI:
     def __init__(self, tpu_path):
         self.tpu_path = tpu_path
         self.models = []
-        self.engines = {}
-        self.labels = {}
         self.run_thread = Thread(target=self.run_models)
         self.run_thread.daemon = True
         self.run_thread.start()
@@ -31,10 +30,11 @@ class AI:
             return {int(num): text.strip() for num, text in lines}
     
     def create_engine(self,model_type):
-        if model_type["path"] not in self.engines.keys():
-            self.engines[model_type["path"]] = model_type["engine"](model_type["path"], self.tpu_path)
-            self.labels[model_type["path"]] = self.load_labels(model_type["label"])
-        return(self.engines[model_type["path"]], self.labels[model_type["path"]])
+        if model_type not in self.models:
+            engine = model_type.engine(model_type.model_path, self.tpu_path)
+            labels = self.load_labels(model_type.label_path)
+            self.models.append(model_type)
+        return(engine, labels)
     
     def run_models(self):
         while True:
@@ -45,43 +45,43 @@ class AI:
 class AIModel():
     def __init__(self, model_type, engine, label):
         self.labels = label
-        self.res = model_type["size"]
+        self.res = model_type.size
         self.engine = engine
         self.frame = None
-        self.listeners = []
-        self.run_func = model_type["runFunc"]
+        self.listeners = set()
+        self.run_func = model_type.post_func
 
-    def add_listener(self, func):
-        self.listeners.append(func)
-
-    def remove_listener(self, func):
-        target = 0
-        for idx, listener in enumerate(self.listeners):
-            if(listener == func):
-                target = idx
-        del(self.listeners[target])
+    def add(self, listener):
+        self.listeners.add(listener)
+        return self
     
-    def remove_listener(self, func):
-        target = 0
-        for idx, listener in enumerate(self.listeners):
-            if(listener == func):
-                target = idx
-        del(self.listeners[target])
+    def remove(self, listener):
+        self.listeners.discard(listener)
+        return self
     
-    def data(self, data):
+    def process_data(self, sender, data):
         self.frame = data
 
     def run(self):
         if self.frame is not None:
             results = self.run_func(self.frame, self.engine, self.labels)
             self.frame = None
-            self.send_data(results)
+            self.fire(self, results)
 
-    def send_data(self, data):
+    def fire(self, sender, data=None):
         for listener in self.listeners:
-            listener(data)
+            listener(sender, data)
+
+    __iadd__ = add
+    __isub__ = remove
+    __call__ = fire
     
 class ModelType:
+    model = collections.namedtuple('model',['engine','model_path','label_path','size','post_func'])
+    DetectFace = model(DetectionEngine, f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite", f"{dirname}/models/face_labels.txt",(320,320),run_detect)
+    DetectFRC = model(DetectionEngine, f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite", f"{dirname}/models/field_labels.txt", (300,300), run_detect)
+    ClassifyRandom = model(ClassificationEngine, f"{dirname}/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite", f"{dirname}/models/imagenet_labels.txt", (224,224), run_classify)
+    
     def run_classify(self, frame, engine, labels):
         start = time.monotonic()
         objs = engine.classify_with_input_tensor(frame)#add arguments
@@ -99,28 +99,6 @@ class ModelType:
         for obj in objs:
             tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id],"inference_time":inference_time})
         return(tempArray)
-
-    detectFace = {"modelType":"detect","engine":DetectionEngine,"path":f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite","label":f"{dirname}/models/face_labels.txt","size":(320,320),"runFunc":run_detect}
-    detectFRC = {"modelType":"detect","engine":DetectionEngine,"path":f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite","label":f"{dirname}/models/field_labels.txt","size":(300,300),"runFunc":run_detect}
-    classifyRandom = {"modelType":"classify","engine":ClassificationEngine,"path":f"{dirname}/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite","label":f"{dirname}/models/imagenet_labels.txt","size":(224,224),"runFunc":run_classify}
-
-
-# class DetectFace(ModelType):
-#     modelType = "detect"
-#     engine = DetectionEngine
-#     path = f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite"
-#     label = f"{dirname}/models/face_labels.txt"
-#     size = (320,320)
-#     runFunc = ModelType.run_detect
-
-
-# class detectFRC(ModelType):
-#     modelType = "detect"
-#     engine = DetectionEngine
-#     path = f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite"
-#     label = f"{dirname}/models/field_labels.txt"
-#     size = (300,300)
-#     runFunc = ModelType.run_detect
 
 class TPUType:
     DEVBOARD = "/dev/apex_0"

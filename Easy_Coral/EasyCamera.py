@@ -68,21 +68,19 @@ class Sink():
         self.camera_class = camera_class
         self.sink_name = sink_name
         self.pipeline_type = pipeline_type
-        self.listeners = []
+        self.listeners = set()
         self.pull_thread = None
         
         self.fps = 0
         self.size = size
-        
-    def add_listener(self, func):
-        self.listeners.append(func)
-
-    def remove_listener(self, func):
-        target = 0
-        for idx, listener in enumerate(self.listeners):
-            if(listener == func):
-                target = idx
-        del(self.listeners[target])
+    
+    def add(self, listener):
+        self.listeners.add(listener)
+        return self
+    
+    def remove(self, listener):
+        self.listeners.discard(listener)
+        return self
     
     def sink_pull(self, sink):
         start = 0
@@ -101,7 +99,7 @@ class Sink():
                     start = end
                 
                 self.data = mapinfo.data
-                self.send_data(self.data)
+                self.fire(self, self.data)
             sleep(0.0001)
     
     def start_sink(self, sink):
@@ -109,12 +107,15 @@ class Sink():
         self.pull_thread.daemon = True
         self.pull_thread.start()
 
-    def send_data(self, data):
+    def fire(self, sender, data=None):
         if self.pipeline_type is PipelineType.RGB:
             data = np.frombuffer(data, dtype=np.uint8)
         for listener in self.listeners:
-            listener(data)
+            listener(sender, data)
 
+    __iadd__ = add
+    __isub__ = remove
+    __call__ = fire
 
 class PipelineType:
     SRC = "v4l2src device={0} ! tee name=t"
