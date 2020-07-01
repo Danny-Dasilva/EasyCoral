@@ -33,7 +33,6 @@ class AI:
         if model_type not in self.models:
             engine = model_type.engine(model_type.model_path, self.tpu_path)
             labels = self.load_labels(model_type.label_path)
-            self.models.append(model_type)
         return(engine, labels)
     
     def run_models(self):
@@ -77,16 +76,7 @@ class AIModel():
     __call__ = fire
     
 class ModelType:
-<<<<<<< HEAD
-    model = collections.namedtuple('model',['engine','model_path','label_path','size','post_func'])
-    DetectFace = model(DetectionEngine, f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite", f"{dirname}/models/face_labels.txt",(320,320),run_detect)
-    DetectFRC = model(DetectionEngine, f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite", f"{dirname}/models/field_labels.txt", (300,300), run_detect)
-    ClassifyRandom = model(ClassificationEngine, f"{dirname}/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite", f"{dirname}/models/imagenet_labels.txt", (224,224), run_classify)
-    
     def run_classify(self, frame, engine, labels):
-=======
-    def run_classify(frame, engine, labels):
->>>>>>> 6764b49c80b7375b08e03c5a2be1794e4410ea1c
         start = time.monotonic()
         objs = engine.classify_with_input_tensor(frame)#add arguments
         inference_time = time.monotonic() - start
@@ -103,6 +93,11 @@ class ModelType:
         for obj in objs:
             tempArray.append({"box":obj.bounding_box.flatten().tolist(),"score":obj.score,"label":labels[obj.label_id],"inference_time":inference_time})
         return(tempArray)
+    
+    model_type = collections.namedtuple('model_type',['engine','model_path','label_path','size','post_func'])
+    DetectFace = model_type(DetectionEngine, f"{dirname}/models/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite", f"{dirname}/models/face_labels.txt",(320,320), run_detect)
+    DetectFRC = model_type(DetectionEngine, f"{dirname}/models/mobilenet_v2_edgetpu_red.tflite", f"{dirname}/models/field_labels.txt", (300,300), run_detect)
+    ClassifyRandom = model_type(ClassificationEngine, f"{dirname}/models/mobilenet_v2_1.0_224_quant_edgetpu.tflite", f"{dirname}/models/imagenet_labels.txt", (224,224), run_classify)
 
 class TPUType:
     DEVBOARD = "/dev/apex_0"
